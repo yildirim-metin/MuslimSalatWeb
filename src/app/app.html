@@ -1,13 +1,18 @@
 <div class="mx-5">
-  <nav class="d-flex gap-3">
+  <nav class="d-flex gap-3 align-items-center">
     <a routerLink="/">Home</a>
     <a routerLink="prayer-time">Prayer Time</a>
-    <a routerLink="login">Login</a>
+
+    @if (!isConnected()) {
+      <a routerLink="login">Login</a>
+      <a routerLink="auth">Register</a>
+    } @else {
+      <button class="btn btn-danger btn-sm" (click)="logout()">Déconnexion</button>
+    }
   </nav>
 
   <h1>Home page - Muslim Salat</h1>
   <p>Bienvenue sur Muslim Salat</p>
-
 </div>
 
 <router-outlet />

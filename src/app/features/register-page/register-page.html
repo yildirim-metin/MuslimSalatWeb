@@ -1,0 +1,134 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Inscription</h2>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="username" class="form-label">Nom d'utilisateur</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                formControlName="username"
+                placeholder="Entrez votre nom d'utilisateur"
+                [class.is-invalid]="isFieldInvalid('username')"
+              />
+              @if (isFieldInvalid('username')) {
+                <div class="invalid-feedback d-block">
+                  @if (registerForm.get('username')?.errors?.['required']) {
+                    <span>Le nom d'utilisateur est requis</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="Entrez votre email"
+                [class.is-invalid]="isFieldInvalid('email')"
+              />
+              @if (isFieldInvalid('email')) {
+                <div class="invalid-feedback d-block">
+                  @if (registerForm.get('email')?.errors?.['required']) {
+                    <span>L'email est requis</span>
+                  }
+                  @if (registerForm.get('email')?.errors?.['email']) {
+                    <span>Veuillez entrer un email valide</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                placeholder="Entrez votre mot de passe"
+                [class.is-invalid]="isFieldInvalid('password')"
+              />
+              @if (isFieldInvalid('password')) {
+                <div class="invalid-feedback d-block">
+                  @if (registerForm.get('password')?.errors?.['required']) {
+                    <span>Le mot de passe est requis</span>
+                  }
+                  @if (registerForm.get('password')?.errors?.['minlength']) {
+                    <span>Le mot de passe doit contenir au moins 6 caractères</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="postcode" class="form-label">Code postal</label>
+              <input
+                type="number"
+                class="form-control"
+                id="postcode"
+                formControlName="postcode"
+                placeholder="Entrez votre code postal"
+                [class.is-invalid]="isFieldInvalid('postcode')"
+              />
+              @if (isFieldInvalid('postcode')) {
+                <div class="invalid-feedback d-block">
+                  @if (registerForm.get('postcode')?.errors?.['required']) {
+                    <span>Le code postal est requis</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="d-grid gap-2 mb-3">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="registerForm.invalid || isLoading()"
+              >
+                @if (!isLoading()) {
+                  <span>S'inscrire</span>
+                } @else {
+                  <span>
+                    <span
+                      class="spinner-border spinner-border-sm me-2"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Inscription en cours...
+                  </span>
+                }
+              </button>
+            </div>
+
+            @if (errorMessage()) {
+              <div class="alert alert-danger" role="alert">
+                {{ errorMessage() }}
+              </div>
+            }
+
+            @if (successMessage()) {
+              <div class="alert alert-success" role="alert">
+                {{ successMessage() }}
+              </div>
+            }
+          </form>
+
+          <div class="text-center mt-3">
+            <p class="mb-0">
+              Vous avez déjà un compte?
+              <a routerLink="/login" class="text-decoration-none">Se connecter</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
