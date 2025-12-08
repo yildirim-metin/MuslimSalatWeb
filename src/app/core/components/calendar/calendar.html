@@ -1,0 +1,25 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <button class="cal-nav" (click)="prevMonth()">&lt;</button>
+    <span class="current-month">{{ monthYearDisplay() }}</span>
+    <button class="cal-nav" (click)="nextMonth()">&gt;</button>
+  </div>
+
+  <div class="calendar-grid">
+    @for (dayName of weekDays; track dayName) {
+      <div class="day-name">{{ dayName }}</div>
+    }
+
+    @for (day of calendarDays(); track day.date.toISOString()) {
+      <div
+        class="day-num"
+        (click)="selectDay(day)"
+        [class.day-muted]="!day.isCurrentMonth"
+        [class.day-active]="day.isSelected"
+        [class.day-today]="day.isToday && !day.isSelected"
+      >
+        {{ day.dayNumber }}
+      </div>
+    }
+  </div>
+</div>
