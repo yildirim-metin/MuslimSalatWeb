@@ -1,0 +1,146 @@
+<div class="admin-container">
+
+    <header class="admin-header">
+        <h1>Panneau <span class="gold-text">Administration</span></h1>
+        <p>Gérez le contenu de l'application</p>
+    </header>
+
+    <div class="tabs-nav">
+        <button class="tab-btn" [class.active]="currentTab() === 'challenges'" (click)="setTab('challenges')">
+            <i class="fa-solid fa-hand-holding-heart"></i> Défis
+        </button>
+
+        <button class="tab-btn" [class.active]="currentTab() === 'verses'" (click)="setTab('verses')">
+            <i class="fa-solid fa-book-quran"></i> Versets
+        </button>
+
+        <button class="tab-btn" [class.active]="currentTab() === 'users'" (click)="setTab('users')">
+            <i class="fa-solid fa-users"></i> Utilisateurs
+        </button>
+    </div>
+
+    @if (currentTab() === 'challenges') {
+    <div class="tab-content fade-in">
+        <div class="action-bar">
+            <h3>Gestion des Défis</h3>
+            <button class="btn-add" (click)="addItem('Défis')">+ Nouveau Défi</button>
+        </div>
+
+        <div class="glass-table-wrapper">
+            <table class="glass-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre du défi</th>
+                        <th>Statut</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (challenge of challenges(); track challenge.id) {
+                    <tr>
+                        <td>#{{ challenge.id }}</td>
+                        <td>{{ challenge.title }}</td>
+                        <td>
+                            <span class="badge" [class.active]="challenge.active">
+                                {{ challenge.active ? 'Actif' : 'Inactif' }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <button class="btn-icon edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-icon delete" (click)="deleteItem('challenge', challenge.id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+
+    @if (currentTab() === 'verses') {
+    <div class="tab-content fade-in">
+        <div class="action-bar">
+            <h3>Versets du jour</h3>
+            <button class="btn-add" (click)="addItem('Verset')">+ Ajouter Verset</button>
+        </div>
+
+        <div class="glass-table-wrapper">
+            <table class="glass-table">
+                <thead>
+                    <tr>
+                        <th>Ref</th>
+                        <th>Texte (Extrait)</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (verse of verses(); track verse.id) {
+                    <tr>
+                        <td>
+                            <span class="gold-text fw-bold">{{ verse.surah }}</span>
+                            <span class="text-muted text-sm">({{ verse.number }})</span>
+                        </td>
+                        <td class="text-truncate">{{ verse.text }}</td>
+                        <td class="text-end">
+                            <button class="btn-icon edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-icon delete" (click)="deleteItem('verse', verse.id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+
+    @if (currentTab() === 'users') {
+    <div class="tab-content fade-in">
+        <div class="action-bar">
+            <h3>Utilisateurs</h3>
+            <button class="btn-add" (click)="addItem('Utilisateur')">+ Créer Compte</button>
+        </div>
+
+        <div class="glass-table-wrapper">
+            <table class="glass-table">
+                <thead>
+                    <tr>
+                        <th>Utilisateur</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (user of users(); track user.id) {
+                    <tr>
+                        <td>
+                            <div class="user-cell">
+                                <div class="avatar-mini">{{ user.username.charAt(0) }}</div>
+                                <span>{{ user.username }}</span>
+                            </div>
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <span class="role-badge" [class.admin]="user.role === 'admin'">
+                                {{ user.role }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <button class="btn-icon delete" (click)="deleteItem('user', user.id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+
+</div>

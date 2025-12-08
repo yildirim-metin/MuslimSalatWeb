@@ -1,0 +1,171 @@
+/* --- CONFIGURATION --- */
+:host {
+    --bg-dark: #0f172a;
+    --bg-panel: #1e293b;
+    --gold: #d4af37;
+    --gold-hover: #b89628;
+    --text-white: #ffffff;
+    --text-muted: #94a3b8;
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --danger: #ef4444;
+  }
+  
+  .admin-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 80vh;
+  }
+  
+  /* Header */
+  .admin-header {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .admin-header h1 { font-size: 32px; color: var(--text-white); margin-bottom: 5px; }
+  .gold-text { color: var(--gold); }
+  .admin-header p { color: var(--text-muted); }
+  
+  /* --- SYSTÈME D'ONGLETS --- */
+  .tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-muted);
+    padding: 12px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+  }
+  
+  .tab-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+  
+  .tab-btn.active {
+    background: var(--gold);
+    color: #0f172a; /* Texte foncé sur l'or */
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  }
+  
+  /* --- BARRE D'ACTION (Titre + Bouton Ajouter) --- */
+  .action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 15px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border-glass);
+  }
+  
+  .action-bar h3 { color: var(--text-white); margin: 0; font-size: 18px; }
+  
+  .btn-add {
+    background: linear-gradient(135deg, #d4af37 0%, #b89628 100%);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .btn-add:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+  
+  /* --- TABLEAU DE VERRE (Glass Table) --- */
+  .glass-table-wrapper {
+    overflow-x: auto; /* Scroll horizontal sur mobile */
+    border-radius: 16px;
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  
+  .glass-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    min-width: 600px; /* Force une largeur min pour garder la structure */
+  }
+  
+  .glass-table th, .glass-table td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-glass);
+  }
+  
+  .glass-table th {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .glass-table td { color: var(--text-white); font-size: 15px; }
+  .glass-table tr:last-child td { border-bottom: none; }
+  .glass-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  
+  /* Alignement */
+  .text-end { text-align: right !important; }
+  .text-muted { color: var(--text-muted); }
+  .text-sm { font-size: 12px; }
+  .fw-bold { font-weight: 700; }
+  .text-truncate { max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  /* --- BADGES ET STATUS --- */
+  .badge {
+    padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;
+    background: #334155; color: #94a3b8;
+  }
+  .badge.active { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.2); }
+  
+  .role-badge {
+    padding: 4px 10px; border-radius: 4px; font-size: 11px; text-transform: uppercase; font-weight: bold;
+    background: rgba(255,255,255,0.1); color: #fff;
+  }
+  .role-badge.admin { background: rgba(212, 175, 55, 0.2); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.3); }
+  
+  /* --- BOUTONS D'ACTION (Tableau) --- */
+  .btn-icon {
+    width: 32px; height: 32px; border-radius: 8px; border: none; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: 5px; transition: 0.2s;
+  }
+  .btn-icon.edit { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+  .btn-icon.edit:hover { background: #60a5fa; color: #fff; }
+  
+  .btn-icon.delete { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+  .btn-icon.delete:hover { background: #ef4444; color: #fff; }
+  
+  /* --- USER CELL (Avatar + Nom) --- */
+  .user-cell { display: flex; align-items: center; gap: 12px; }
+  .avatar-mini {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--gold); color: #000; font-weight: bold;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  
+  /* Animation */
+  .fade-in { animation: fadeIn 0.3s ease-in-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .tabs-nav { flex-direction: column; width: 100%; }
+    .tab-btn { width: 100%; justify-content: center; }
+    .action-bar { flex-direction: column; gap: 15px; text-align: center; }
+  }
