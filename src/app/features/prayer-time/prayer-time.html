@@ -1,9 +1,104 @@
-<div class="mx-5">
-  <h2>Prayer Timings</h2>
+<div class="preview-section">
+  <div class="prayer-preview-card">
 
-  <p>fajr: {{ prayerTiming?.fajr }}</p>
-  <p>dhuhr: {{ prayerTiming?.dhuhr }}</p>
-  <p>asr: {{ prayerTiming?.asr }}</p>
-  <p>maghrib: {{ prayerTiming?.maghrib }}</p>
-  <p>isha: {{ prayerTiming?.isha }}</p>
+    <div class="widget-header">
+      <div class="location-selector">
+        <span class="loc-icon">📍</span>
+        <input type="text" value="Paris, France" class="loc-input" placeholder="Chercher une ville...">
+        <span class="edit-icon">✎</span>
+      </div>
+      <div class="date-display">Mardi 24 Oct</div>
+    </div>
+
+    <div class="widget-content">
+
+      <div class="left-panel">
+        <div class="next-prayer-highlight">
+          <p>Prochaine prière : <span class="gold-text">Asr</span></p>
+          <div class="countdown">00:45:12</div>
+        </div>
+
+        <div class="prayer-list">
+          <div class="prayer-row">
+            <span class="p-name">Fajr</span>
+            <span class="p-time">06:42</span>
+          </div>
+          <div class="prayer-row">
+            <span class="p-name">Dhuhr</span>
+            <span class="p-time">13:15</span>
+          </div>
+          <div class="prayer-row active-row">
+            <div class="row-content">
+              <span class="p-name">Asr</span>
+              <span class="active-badge">Bientôt</span>
+            </div>
+            <span class="p-time">16:08</span>
+          </div>
+          <div class="prayer-row">
+            <span class="p-name">Maghrib</span>
+            <span class="p-time">18:55</span>
+          </div>
+          <div class="prayer-row">
+            <span class="p-name">Isha</span>
+            <span class="p-time">20:12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vertical-divider"></div>
+
+      <div class="right-panel">
+        <div class="calendar-header">
+          <button class="cal-nav">&lt;</button>
+          <span class="current-month">Octobre 2023</span>
+          <button class="cal-nav">&gt;</button>
+        </div>
+
+        <div class="calendar-grid">
+          <div class="day-name">Lu</div>
+          <div class="day-name">Ma</div>
+          <div class="day-name">Me</div>
+          <div class="day-name">Je</div>
+          <div class="day-name">Ve</div>
+          <div class="day-name">Sa</div>
+          <div class="day-name">Di</div>
+
+          <div class="day-num day-muted">29</div>
+          <div class="day-num day-muted">30</div>
+          <div class="day-num">1</div>
+          <div class="day-num">2</div>
+          <div class="day-num">3</div>
+          <div class="day-num">4</div>
+          <div class="day-num">5</div>
+          <div class="day-num">6</div>
+          <div class="day-num">7</div>
+          <div class="day-num">8</div>
+          <div class="day-num">9</div>
+          <div class="day-num">10</div>
+          <div class="day-num">11</div>
+          <div class="day-num">12</div>
+          <div class="day-num">13</div>
+          <div class="day-num">14</div>
+          <div class="day-num">15</div>
+          <div class="day-num">16</div>
+          <div class="day-num">17</div>
+          <div class="day-num">18</div>
+          <div class="day-num">19</div>
+          <div class="day-num">20</div>
+          <div class="day-num">21</div>
+          <div class="day-num">22</div>
+          <div class="day-num">23</div>
+          <div class="day-num day-active">24</div>
+          <div class="day-num">25</div>
+          <div class="day-num">26</div>
+          <div class="day-num">27</div>
+          <div class="day-num">28</div>
+          <div class="day-num">29</div>
+          <div class="day-num">30</div>
+          <div class="day-num">31</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

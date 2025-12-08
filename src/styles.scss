@@ -1,1 +1,324 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================
+   STYLES GLOBAUX DE L'APPLICATION
+   (À mettre dans src/styles.css)
+   ========================================= */
+
+/* 1. Variables Globales (Accessibles partout) */
+:root {
+    --bg-dark: #0f172a;        /* Bleu Nuit Profond */
+    --gold: #d4af37;           /* Or Principal */
+    --gold-dim: rgba(212, 175, 55, 0.2);
+    --card-bg: #1e293b;        /* Fond des cartes */
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --font-ui: 'Inter', sans-serif;
+    --font-arabic: 'Amiri', serif;
+}
+
+/* 2. Reset & Configuration de base */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    /* Couleur de fond immédiate (évite le flash blanc au chargement) */
+    background-color: var(--bg-dark); 
+    color: var(--text-main);
+    
+    /* Typographie par défaut */
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased; /* Rendu net sur Mac/iOS */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3. Scrollbar Personnalisée */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track { background: #050914; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+
+/* =========================================
+   NOUVEAU : DASHBOARD "CARTES HORIZONTALES"
+   (Style inspiré de l'image mais thème Or/Bleu)
+   ========================================= */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* --- EN-TÊTE : RECHERCHE ET DATE --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-left h2 {
+    font-size: 32px;
+    margin: 0 0 20px 0;
+    font-weight: 800;
+}
+
+.search-bar-styled {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 50px; /* Arrondi complet comme l'image */
+    width: 300px;
+    transition: 0.3s;
+}
+
+.search-bar-styled:focus-within {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    margin-left: 10px;
+    flex: 1;
+    outline: none;
+    font-size: 14px;
+}
+
+.btn-search {
+    background: var(--gold);
+    color: #0f172a;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.2s;
+}
+
+.btn-search:hover { transform: scale(1.05); }
+
+.header-right {
+    text-align: right;
+}
+
+.date-gregorian { font-size: 18px; font-weight: 600; color: #fff; }
+.date-hijri { font-size: 14px; color: var(--gold); margin-top: 4px; }
+
+/* --- CONTENEUR DES CARTES (SCROLL HORIZONTAL) --- */
+.cards-scroll-container {
+    display: flex;
+    align-items: center; /* Centre verticalement les cartes */
+    gap: 20px;
+    overflow-x: auto;
+    padding: 40px 10px; /* Padding pour ne pas couper les ombres */
+    /* Masquer scrollbar par défaut pour l'esthétique */
+    scrollbar-width: none; 
+}
+.cards-scroll-container::-webkit-scrollbar { display: none; }
+
+/* --- STYLE DE LA CARTE STANDARD --- */
+.prayer-card {
+    min-width: 160px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: default;
+    position: relative;
+}
+
+.prayer-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-5px);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.p-name {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.p-icon {
+    font-size: 18px;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.p-time {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* --- STYLE DE LA CARTE ACTIVE (Highlight) --- */
+.prayer-card.active {
+    min-width: 220px;  /* Plus large */
+    height: 240px;     /* Plus haute */
+    background: #1e293b; /* Fond un peu plus clair que le body */
+    
+    /* La bordure OR remplace la bordure verte de l'image */
+    border: 2px solid var(--gold);
+    
+    /* Ombre portée dorée */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(212, 175, 55, 0.15);
+    
+    z-index: 10;
+    transform: scale(1.05); /* Zoom effect */
+}
+
+/* Badge "Maintenant" */
+.badge-now {
+    background: rgba(212, 175, 55, 0.2);
+    color: var(--gold);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+/* Texte agrandi pour la carte active */
+.prayer-card.active .p-name {
+    font-size: 24px;
+    color: #fff; /* Le nom devient blanc */
+    margin-bottom: 5px;
+}
+
+.prayer-card.active .p-time {
+    font-size: 48px; /* L'heure devient énorme */
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Compte à rebours spécifique à la carte active */
+.countdown-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.countdown-text i { color: var(--gold); }
+
+/* =========================================
+   SECTION CTA (APPEL À L'ACTION) - NON CONNECTÉ
+   ========================================= */
+
+.auth-cta-section {
+    margin-top: 60px;
+    padding: 40px;
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.7) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 24px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Petit effet de lumière dorée */
+.auth-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.auth-cta-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.auth-cta-text {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth-buttons-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1; /* Pour être au-dessus du halo lumineux */
+}
+
+/* Bouton Principal Doré (S'inscrire) */
+.btn-cta-gold {
+    background: linear-gradient(135deg, #d4af37 0%, #b48608 100%);
+    color: #0f172a;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-cta-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+/* Bouton Secondaire Outline (Se connecter) */
+.btn-cta-outline {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-cta-outline:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}

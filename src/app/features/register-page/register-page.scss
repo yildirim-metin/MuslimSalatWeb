@@ -1,0 +1,146 @@
+/* --- Configuration Globale de la Page (Optionnel mais recommandé) --- */
+/* Pour éviter d'avoir une carte sombre sur un fond blanc éclatant */
+body {
+    background-color: #0f172a; /* Le ton le plus sombre de ton dégradé */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  /* --- La Carte Principale (Adaptation de .prayer-preview-card) --- */
+  .card {
+    /* Fond dégradé sombre (Bleu Nuit) */
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 30px; /* Arrondis prononcés */
+    padding: 20px; /* Un peu d'espace interne supplémentaire */
+    
+    /* Bordure subtile et Ombre profonde */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    color: white; /* Texte blanc par défaut */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Effet de lumière dorée en haut (comme sur le widget) */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+    z-index: 1;
+  }
+  
+  /* --- Titre --- */
+  .card-title {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    /* Lueur dorée subtile sur le titre */
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+  }
+  
+  /* --- Labels (Adaptation de .location-badge) --- */
+  .form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #94a3b8; /* Gris bleuté */
+    margin-bottom: 8px;
+    margin-left: 4px; /* Petit décalage pour aligner avec l'input arrondi */
+  }
+  
+  /* --- Inputs (Adaptation de .prayer-row) --- */
+  .form-control {
+    background-color: rgba(255, 255, 255, 0.03); /* Fond très léger */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure discrète */
+    border-radius: 14px; /* Arrondis comme les lignes de prière */
+    color: #fff;
+    padding: 12px 16px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+  }
+  
+  /* Texte placeholder plus discret */
+  .form-control::placeholder {
+    color: #64748b;
+  }
+  
+  /* Focus sur l'input (Adaptation de .active-row) */
+  .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Bordure dorée au focus */
+    border-color: #d4af37;
+    /* Lueur dorée */
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+    color: #fff;
+  }
+  
+  /* Gestion de l'erreur dans l'input */
+  .form-control.is-invalid {
+    border-color: #ef4444; /* Rouge erreur */
+    background-image: none; /* Suppression de l'icône Bootstrap par défaut si souhaité */
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+  }
+  
+  /* --- Bouton (Style Or "Premium") --- */
+  .btn-primary {
+    background: linear-gradient(90deg, #d4af37, #b89628); /* Dégradé Or */
+    border: none;
+    color: #0f172a; /* Texte foncé pour le contraste sur l'or */
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+    background: linear-gradient(90deg, #e5c146, #c9a42e);
+    color: #000;
+  }
+  
+  .btn-primary:disabled {
+    background: #334155;
+    color: #64748b;
+    border: none;
+  }
+  
+  /* --- Messages d'erreur et succès --- */
+  .invalid-feedback span {
+    color: #ef4444;
+    font-size: 13px;
+    margin-left: 5px;
+  }
+  
+  .alert {
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+  }
+  
+  .alert-danger {
+    color: #fca5a5;
+    border-left: 3px solid #ef4444;
+  }
+  
+  .alert-success {
+    color: #86efac;
+    border-left: 3px solid #22c55e;
+  }
+  
+  /* --- Liens (Connexion) --- */
+  .text-center p {
+    color: #94a3b8;
+  }
+  
+  a.text-decoration-none {
+    color: #d4af37; /* Lien Doré */
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  
+  a.text-decoration-none:hover {
+    color: #fff;
+    text-decoration: underline !important;
+  }

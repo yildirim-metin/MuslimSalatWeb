@@ -1,0 +1,264 @@
+/* =========================================
+   THÈME : NUIT SACRÉE (Dark Blue & Gold)
+   ========================================= */
+
+/* --- Global Navbar Layout --- */
+.apple-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 70px; /* Un tout petit peu plus haut pour le côté majestueux */
+  
+  /* Fond : Bleu Nuit profond et transparent */
+  background-color: rgba(5, 9, 20, 0.75); 
+  backdrop-filter: blur(20px) saturate(180%);
+  
+  /* Bordure : Un fil d'or très subtil en bas */
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.nav-content {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- 1. Logo --- */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  /* gap: 10px;  SUPPRIMÉ : On utilise une marge sur le SVG pour un contrôle plus fin */
+  margin-right: 30px;
+}
+
+/* .emoji { font-size: 24px; } SUPPRIMÉ car remplacé par le SVG */
+
+/* --- NOUVEAU CSS POUR LE LOGO SVG --- */
+.nav-svg-logo {
+  height: 32px; /* Taille fixe pour la navbar */
+  width: auto;  /* Largeur automatique proportionnelle */
+  margin-right: 12px; /* Espace entre le logo et le texte */
+  /* Effet de brillance dorée subtile */
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Animation au survol du logo complet */
+.brand-logo:hover .nav-svg-logo {
+    transform: scale(1.08); /* Léger zoom */
+    /* La brillance s'intensifie au survol */
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7));
+}
+/* ----------------------------------- */
+
+.brand-text {
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.5px;
+  
+  /* Effet Premium : Dégradé Blanc vers Doré sur le texte */
+  background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- 2. Liens de Navigation --- */
+.nav-links {
+  display: flex;
+  gap: 24px;
+  flex-grow: 1;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #94a3b8; /* Gris bleuté (Muted) pour les liens inactifs */
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: #ffffff; /* Devient blanc au survol */
+}
+
+/* Lien Actif : Doré */
+.nav-links a.active {
+  color: #d4af37; /* Or */
+  font-weight: 600;
+}
+
+/* Petite lueur sous le lien actif (Optionnel, très classe) */
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  border-radius: 2px;
+}
+
+/* --- 3. Actions (Auth/Profile) --- */
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Bouton Login (Visiteur) */
+.link-login {
+  text-decoration: none;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+.link-login:hover { opacity: 0.8; }
+
+/* Bouton Register (Visiteur) */
+.btn-register {
+  text-decoration: none;
+  font-size: 13px;
+  
+  /* Bouton Doré */
+  background: linear-gradient(135deg, #d4af37 0%, #b48608 100%);
+  color: #050914; /* Texte foncé sur fond or pour le contraste */
+  
+  padding: 8px 18px;
+  border-radius: 99px;
+  font-weight: 600;
+  transition: transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); /* Ombre dorée */
+}
+
+.btn-register:hover {
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+.btn-register:active { transform: scale(0.96); }
+
+/* --- Profil Avatar & Dropdown --- */
+.profile-container {
+  position: relative;
+}
+
+.avatar-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  
+  /* Fond avatar sombre mais légèrement plus clair que la navbar */
+  background-color: #1e293b; 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #d4af37; /* Initiales en or */
+  transition: all 0.2s;
+}
+
+.avatar-btn:hover {
+  background-color: #334155;
+  border-color: #d4af37; /* Bordure or au survol */
+}
+
+.avatar-btn.active {
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.5); /* Anneau or focus */
+  border-color: #d4af37;
+}
+
+/* --- Menu Déroulant (Popover Dark) --- */
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 240px;
+  
+  /* Fond sombre opaque */
+  background-color: #0f172a; 
+  
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure fine grise */
+  padding: 8px;
+  z-index: 1001;
+  animation: popIn 0.2s ease-out;
+}
+
+.menu-header {
+  padding: 12px 16px;
+}
+.user-name { margin: 0; font-weight: 600; font-size: 15px; color: #fff; }
+.user-email { margin: 0; font-size: 12px; color: #94a3b8; }
+
+.menu-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1); /* Ligne de séparation subtile */
+  margin: 6px 0;
+}
+
+.menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #e2e8f0; /* Texte clair */
+  text-decoration: none;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.menu-item:hover {
+  background-color: rgba(212, 175, 55, 0.1); /* Fond légèrement doré au survol */
+  color: #d4af37; /* Texte devient or */
+}
+
+.text-danger { color: #ff5b5b; }
+.text-danger:hover {
+  background-color: rgba(255, 91, 91, 0.1);
+  color: #ff5b5b;
+}
+
+/* Overlay pour fermer au clic extérieur */
+.overlay-click {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 999;
+  cursor: default;
+}
+
+/* Contenu Principal */
+.main-content {
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.hero-section {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.hero-section h1 { color: #ffffff; }
+.hero-section p { color: #94a3b8; }
+
+/* Animation d'entrée du menu */
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

@@ -1,0 +1,169 @@
+/* --- Layout Principal --- */
+.login-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Centre verticalement sur la page */
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.login-section {
+  width: 100%;
+  max-width: 400px; /* Même largeur que le widget */
+}
+
+/* --- La Carte de Connexion (Style identique au Widget) --- */
+.login-card {
+  /* Fond dégradé sombre (Bleu Nuit) */
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 30px;
+  padding: 40px 30px;
+  
+  /* Bordure subtile et Ombre profonde */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+/* Petit effet de lumière en haut */
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+}
+
+/* --- En-tête --- */
+.card-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.icon-lock {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+  /* Petite lueur dorée derrière l'icône */
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.card-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.subtitle {
+  margin: 0;
+  color: #94a3b8; /* Gris bleuté */
+  font-size: 14px;
+}
+
+/* --- Formulaire --- */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-left: 5px;
+}
+
+/* Inputs (Champs de texte) */
+input {
+  width: 100%;
+  padding: 14px 16px;
+  box-sizing: border-box; /* Important pour ne pas dépasser */
+  
+  /* Fond très léger comme les lignes de prière */
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: #d4af37; /* Bordure dorée au focus */
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+}
+
+/* Erreur */
+input.input-error {
+  border-color: #ff5b5b;
+  background-color: rgba(255, 91, 91, 0.05);
+}
+
+/* --- Bouton Principal (Or) --- */
+.btn-submit-gold {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  
+  /* Dégradé Or comme le badge "Bientôt" ou le texte highlight */
+  background: linear-gradient(135deg, #d4af37 0%, #b48608 100%);
+  color: #0f172a; /* Texte foncé pour le contraste */
+  
+  border: none;
+  border-radius: 14px; /* Même arrondi que les inputs */
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn-submit-gold:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-submit-gold:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* --- Footer (Lien) --- */
+.form-footer {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.form-footer p {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.link-gold {
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.link-gold:hover {
+  color: #fff;
+  text-decoration: underline;
+}

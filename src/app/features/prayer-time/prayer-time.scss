@@ -1,0 +1,203 @@
+/* --- Conteneur Global --- */
+.preview-section {
+  width: 100%;
+  /* On augmente la largeur max pour accueillir les deux colonnes */
+  max-width: 850px; 
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --- La Carte Widget --- */
+.prayer-preview-card {
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 30px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.prayer-preview-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+}
+
+/* --- Header & Location Input --- */
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Style du champ de recherche de ville */
+.location-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.location-selector:hover, .location-selector:focus-within {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.loc-icon { font-size: 16px; }
+
+.loc-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  width: 140px;
+  outline: none;
+}
+.loc-input::placeholder { color: #94a3b8; }
+
+.edit-icon { 
+  font-size: 12px; 
+  color: #94a3b8; 
+  cursor: pointer; 
+}
+
+.date-display {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+/* --- Layout 2 Colonnes --- */
+.widget-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* Panneau Gauche : Prières */
+.left-panel {
+  flex: 1; /* Prend 50% de l'espace ou s'adapte */
+  min-width: 280px;
+}
+
+/* Panneau Droite : Calendrier */
+.right-panel {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* Séparateur Vertical */
+.vertical-divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
+  align-self: stretch; /* Prend toute la hauteur */
+}
+
+/* --- Styles Existant Prières (Conservés) --- */
+.next-prayer-highlight { text-align: center; margin-bottom: 20px; }
+.next-prayer-highlight p { margin: 0 0 5px 0; color: #94a3b8; font-size: 14px; }
+.gold-text { color: #d4af37; font-weight: 700; }
+.countdown {
+  font-size: 42px; font-weight: 700; color: #fff;
+  font-feature-settings: "tnum"; letter-spacing: -1px;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+}
+
+.prayer-list { display: flex; flex-direction: column; gap: 10px; }
+
+.prayer-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+.p-name { color: #cbd5e1; font-weight: 500; font-size: 14px; }
+.p-time { color: #fff; font-weight: 600; font-size: 14px; }
+
+.active-row {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+.active-row .p-name, .active-row .p-time { color: #d4af37; }
+
+.row-content { display: flex; align-items: center; }
+.active-badge {
+  font-size: 9px; background-color: #d4af37; color: #000;
+  padding: 2px 5px; border-radius: 4px; font-weight: 800; margin-left: 8px; text-transform: uppercase;
+}
+
+/* --- Styles Nouveaux : Calendrier --- */
+.calendar-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
+}
+
+.current-month { color: #fff; font-weight: 600; font-size: 16px; }
+
+.cal-nav {
+  background: rgba(255,255,255,0.05);
+  border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 8px;
+  cursor: pointer; transition: 0.2s;
+}
+.cal-nav:hover { background: rgba(212, 175, 55, 0.2); color: #d4af37; }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 colonnes égales */
+  gap: 8px;
+  text-align: center;
+}
+
+.day-name {
+  color: #94a3b8; font-size: 12px; font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.day-num {
+  height: 32px; width: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: #e2e8f0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.day-num:hover:not(.day-active) {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.day-muted { color: #475569; } /* Jours hors mois */
+
+.day-active {
+  background-color: #d4af37;
+  color: #0f172a;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+/* --- Responsive (Mobile) --- */
+@media (max-width: 768px) {
+  .widget-content {
+    flex-direction: column; /* Empile les éléments sur mobile */
+  }
+  .vertical-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 20px 0;
+  }
+  .left-panel, .right-panel { width: 100%; }
+  .location-selector { width: 100%; }
+  .loc-input { width: 100%; }
+}

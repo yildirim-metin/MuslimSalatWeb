@@ -1,0 +1,134 @@
+<div class="dashboard-layout">
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">MyDeen</span>
+        </div>
+
+        <ul class="side-links">
+            <li class="active">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Vue d'ensemble</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-clock"></i>
+                <span>Horaires</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-book-quran"></i>
+                <span>Coran / Hadith</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-compass"></i>
+                <span>Qibla</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Statistiques</span>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-mini">
+                <div class="avatar-circle">A</div>
+                <div class="user-info">
+                    <span class="name">Amine</span>
+                    <span class="status">Premium</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+
+        <header class="dash-header">
+            <div class="welcome-text">
+                <h1>As-salamu alaykum, <span class="gold-text">Amine</span></h1>
+                <p class="hijri-date">Mercredi 3 Décembre • 14 Joumada al-oula 1446</p>
+            </div>
+            <button class="notif-btn">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notif-dot"></span>
+            </button>
+        </header>
+
+        <div class="bento-grid">
+
+            <div class="card glass-card prayer-main">
+                <div class="card-top">
+                    <h3>Prochaine Prière</h3>
+                    <span class="prayer-badge">Asr</span>
+                </div>
+                <div class="prayer-center">
+                    <div class="countdown">01:24:30</div>
+                    <p class="sub-text">avant l'appel</p>
+                </div>
+                <div class="prayer-bottom">
+                    <button class="btn-action-gold">Voir les horaires</button>
+                </div>
+            </div>
+
+            <div class="card glass-card verse-box">
+                <div class="card-top">
+                    <h3>Verset du jour</h3>
+                    <i class="fa-solid fa-quote-right icon-faded"></i>
+                </div>
+                <div class="verse-body">
+                    <p class="arabic-text">إِنَّ مَعَ الْعُسْرِ يُسْرًا</p>
+                    <p class="french-text">"À côté de la difficulté est, certes, une facilité."</p>
+                    <span class="surah-ref">Sourate Ash-Sharh (94:6)</span>
+                </div>
+            </div>
+
+            <div class="card glass-card challenge-box">
+                <div class="card-top">
+                    <h3>Défi du jour</h3>
+                    <i class="fa-solid fa-hand-holding-heart icon-gold"></i>
+                </div>
+                <div class="challenge-content">
+                    <p>Appelle un proche pour prendre de ses nouvelles.</p>
+                    <label class="gold-checkbox">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                        J'ai relevé le défi !
+                    </label>
+                </div>
+            </div>
+
+            <div class="card glass-card progress-box">
+                <div class="card-top">
+                    <h3>Mon Suivi</h3>
+                </div>
+                <div class="trackers">
+                    <div class="tracker-item">
+                        <div class="tracker-label">
+                            <span>Prières</span>
+                            <span>3/5</span>
+                        </div>
+                        <div class="bar-bg">
+                            <div class="bar-fill gold" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="tracker-item">
+                        <div class="tracker-label">
+                            <span>Lecture</span>
+                            <span>15 min</span>
+                        </div>
+                        <div class="bar-bg">
+                            <div class="bar-fill blue" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card glass-card qibla-box">
+                <h3>Qibla</h3>
+                <div class="compass-circle">
+                    <i class="fa-solid fa-location-arrow arrow-icon"></i>
+                </div>
+                <span>114° SE</span>
+            </div>
+
+        </div>
+    </main>
+</div>

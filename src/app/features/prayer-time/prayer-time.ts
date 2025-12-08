@@ -9,13 +9,11 @@ import { PrayerTimeService } from '@core/services/prayer-time.service';
   styleUrl: './prayer-time.scss',
 })
 export class PrayerTime implements OnInit {
-  private readonly _prayerTimeService = inject(PrayerTimeService);
-
-  public prayerTiming?: PrayerTiming | null;
-
-  ngOnInit(): void {
-    this._prayerTimeService.getPrayerTiming('Rue maubeuge 13, 4100 Seraing');
-
-    this.prayerTiming = this._prayerTimeService.prayerTiming();
-  }
+ngOnInit(): void {
+  throw new Error('Method not implemented.');
+}
+nextPrayer(): string {
+  // Ensure this method returns a string value representing the next prayer
+  return 'Fajr'; // Replace with your actual logic
+}
 }

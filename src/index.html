@@ -1,13 +1,105 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>MuslimSalatWeb</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
-  <body>
-    <app-root></app-root>
-  </body>
-</html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Muslim Salat | Votre Compagnon Spirituel</title>
+  <base href="/" />
+
+  <!-- Configuration Mobile & UI -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <!-- Couleur de la barre d'adresse mobile (Match ton thème sombre) -->
+  <meta name="theme-color" content="#050914">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+  <!-- 1. POLICES (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Inter pour l'UI, Amiri pour le texte Arabe/Coranique -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- 2. ICÔNES (FontAwesome CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <app-root></app-root>
+  <div class="dashboard-container">
+
+    <!-- EN-TÊTE -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h2>Liège, Belgique</h2>
+        <div class="search-bar-styled">
+          <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
+          <input type="text" class="search-input" placeholder="Indiquez votre localité">
+          <button class="btn-search">Recherche</button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="date-gregorian">Jeudi, 04 Décembre 2025</div>
+        <div class="date-hijri">13 Jumada al-Alkhirah 1447</div>
+      </div>
+    </div>
+
+    <!-- LES CARTES -->
+    <div class="cards-scroll-container">
+
+      <!-- Carte Standard -->
+      <div class="prayer-card">
+        <div class="card-top">
+          <span class="p-name">Fajr</span>
+          <i class="fa-solid fa-cloud-sun p-icon"></i>
+        </div>
+        <div class="p-time">06:19</div>
+      </div>
+
+      <!-- Carte Standard -->
+      <div class="prayer-card">
+        <div class="card-top">
+          <span class="p-name">Dhuhr</span>
+          <i class="fa-regular fa-sun p-icon"></i>
+        </div>
+        <div class="p-time">12:28</div>
+      </div>
+
+      <!-- Carte Standard -->
+      <div class="prayer-card">
+        <div class="card-top">
+          <span class="p-name">Asr</span>
+          <i class="fa-solid fa-cloud-sun p-icon"></i>
+        </div>
+        <div class="p-time">14:15</div>
+      </div>
+
+      <!-- CARTE ACTIVE (Maghrib) -->
+      <div class="prayer-card active">
+        <div>
+          <span class="badge-now">Maintenant</span>
+          <div class="p-name">Maghrib</div>
+          <i class="fa-solid fa-moon p-icon" style="float: right; margin-top: -25px; color: var(--gold);"></i>
+        </div>
+
+        <div>
+          <div class="p-time">16:34</div>
+          <div class="countdown-text">
+            <i class="fa-regular fa-hourglass"></i>
+            <span>Isha dans 1h 41m</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carte Standard -->
+      <div class="prayer-card">
+        <div class="card-top">
+          <span class="p-name">Isha</span>
+          <i class="fa-solid fa-moon p-icon"></i>
+        </div>
+        <div class="p-time">18:32</div>
+      </div>
+
+    </div>
+  </div>

@@ -1,0 +1,301 @@
+/* --- CONFIGURATION DU THÈME LOCAL --- */
+:host {
+    --dash-bg: #0f172a;           /* Fond global */
+    --sidebar-bg: rgba(15, 23, 42, 0.6); /* Sidebar semi-transparente */
+    --card-bg: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    --gold: #d4af37;              /* Or Principal */
+    --gold-glow: rgba(212, 175, 55, 0.3);
+    --text-main: #ffffff;
+    --text-light: #e2e8f0;        /* Blanc cassé (Très lisible) */
+    --text-muted: #94a3b8;        /* Gris pour les infos secondaires */
+    --border-light: rgba(255, 255, 255, 0.08);
+  }
+  
+  /* --- STRUCTURE GLOBALE (LAYOUT) --- */
+  .dashboard-layout {
+    display: flex;
+    height: calc(100vh - 70px); 
+    overflow: hidden; 
+    background-color: var(--dash-bg);
+  }
+  
+  /* --- SIDEBAR (GAUCHE) --- */
+  .sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    flex-shrink: 0;
+  }
+  
+  .sidebar-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 40px;
+  }
+  
+  .side-links {
+    list-style: none;
+    flex: 1;
+    padding: 0;
+  }
+  
+  .side-links li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 15px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .side-links li i { width: 20px; text-align: center; font-size: 18px; }
+  
+  .side-links li:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+  }
+  
+  .side-links li.active {
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), transparent);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
+  }
+  
+  .sidebar-footer {
+    border-top: 1px solid var(--border-light);
+    padding-top: 20px;
+  }
+  
+  .user-mini {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .avatar-circle {
+    width: 40px; height: 40px;
+    background: var(--gold);
+    color: #000;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  
+  .user-info { display: flex; flex-direction: column; }
+  .user-info .name { font-weight: 600; color: #fff; font-size: 14px; }
+  .user-info .status { font-size: 11px; color: var(--gold); text-transform: uppercase; }
+  
+  /* --- CONTENU PRINCIPAL (DROITE) --- */
+  .dashboard-content {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+  }
+  
+  /* Header Interne */
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 35px;
+  }
+  
+  .welcome-text h1 { font-size: 26px; color: #fff; margin-bottom: 5px; }
+  .gold-text { color: var(--gold); }
+  .hijri-date { color: var(--text-muted); font-size: 14px; }
+  
+  .notif-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-light);
+    color: #fff;
+    width: 45px; height: 45px;
+    border-radius: 14px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .notif-btn:hover { background: rgba(255,255,255,0.1); }
+  .notif-dot {
+    position: absolute; top: 12px; right: 12px;
+    width: 8px; height: 8px;
+    background-color: #ef4444; border-radius: 50%;
+    border: 2px solid var(--dash-bg);
+  }
+  
+  /* --- GRILLE BENTO (GRID SYSTEM) --- */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+    gap: 25px;
+    padding-bottom: 40px;
+  }
+  
+  /* --- CARTE GÉNÉRIQUE (GLASS) --- */
+  .glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-glow);
+  }
+  
+  .glass-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+  
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .card-top h3 { font-size: 16px; color: var(--text-muted); font-weight: 600; margin: 0; }
+  
+  /* --- 1. PRIÈRE (WIDGET PRINCIPAL) --- */
+  .prayer-main {
+    grid-column: span 2;
+    background: linear-gradient(145deg, #25324b 0%, #111b2e 100%);
+  }
+  
+  .prayer-badge {
+    background: var(--gold); color: #0f172a;
+    padding: 4px 12px; border-radius: 20px;
+    font-weight: 800; font-size: 12px; text-transform: uppercase;
+  }
+  
+  .prayer-center { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .countdown {
+    font-size: 52px; font-weight: 700; color: #fff;
+    text-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+    font-variant-numeric: tabular-nums;
+    line-height: 1; margin-bottom: 5px;
+  }
+  .sub-text { 
+    color: var(--text-light); /* Texte clair */
+    font-size: 15px; 
+    font-weight: 500;
+  }
+  
+  .btn-action-gold {
+    width: 100%;
+    background: linear-gradient(90deg, #d4af37, #b89628);
+    border: none; padding: 12px; border-radius: 12px;
+    color: #0f172a; font-weight: 700; cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn-action-gold:hover { transform: scale(1.01); box-shadow: 0 5px 15px var(--gold-glow); }
+  
+  /* --- 2. VERSET --- */
+  .verse-box { justify-content: center; text-align: center; }
+  .icon-faded { opacity: 0.3; }
+  .arabic-text {
+    font-family: serif; font-size: 24px; color: var(--gold);
+    margin: 10px 0; line-height: 1.4;
+  }
+  .french-text { 
+    font-style: italic; 
+    font-size: 16px; 
+    color: var(--text-light); /* Texte clair */
+    margin-bottom: 8px; 
+    line-height: 1.5;
+  }
+  .surah-ref { font-size: 12px; color: var(--text-muted); }
+  
+  /* --- 3. DÉFI (Correction Lisibilité) --- */
+  .icon-gold { color: var(--gold); }
+  .challenge-content p { 
+    font-size: 16px; 
+    line-height: 1.6; 
+    margin-bottom: 20px;
+    color: var(--text-light); /* Texte très clair (Blanc cassé) */
+    font-weight: 500;
+  }
+  
+  .gold-checkbox {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer; 
+    color: #fff; /* Blanc pur pour l'action */
+    font-weight: 600; font-size: 14px;
+  }
+  .gold-checkbox input { display: none; }
+  .checkmark {
+    width: 20px; height: 20px;
+    border: 1px solid var(--gold); border-radius: 5px;
+    background: rgba(255,255,255,0.05); display: grid; place-items: center;
+  }
+  .gold-checkbox input:checked ~ .checkmark { background: var(--gold); }
+  .gold-checkbox input:checked ~ .checkmark::after {
+    content: '✓'; color: #000; font-size: 14px; font-weight: bold;
+  }
+  
+  /* --- 4. PROGRESSION --- */
+  .trackers { display: flex; flex-direction: column; gap: 15px; }
+  .tracker-item { width: 100%; }
+  .tracker-label { 
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 14px; 
+    margin-bottom: 6px;
+    color: var(--text-light); /* Texte clair */
+    font-weight: 500;
+  }
+  .bar-bg { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-fill.gold { background: var(--gold); }
+  .bar-fill.blue { background: #60a5fa; }
+  
+  /* --- 5. QIBLA --- */
+  .qibla-box { align-items: center; justify-content: center; text-align: center; }
+  .compass-circle {
+    width: 80px; height: 80px;
+    border: 2px solid var(--border-light); border-radius: 50%;
+    margin: 15px 0; display: grid; place-items: center;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  }
+  .arrow-icon { font-size: 28px; color: var(--gold); transform: rotate(-45deg); }
+  
+  /* --- RESPONSIVE MOBILE --- */
+  @media (max-width: 900px) {
+    .dashboard-layout { flex-direction: column; height: auto; }
+    
+    .sidebar { 
+        width: 100%; 
+        padding: 15px; 
+        flex-direction: row; 
+        justify-content: space-between;
+        align-items: center;
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+    }
+    .side-links, .sidebar-footer { display: none; } 
+    .sidebar-title { margin: 0; font-size: 18px; }
+  
+    .bento-grid { grid-template-columns: 1fr; }
+    .prayer-main { grid-column: span 1; }
+    
+    .dashboard-content { padding: 20px; }
+  }
