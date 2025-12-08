@@ -1,12 +1,22 @@
 <header class="apple-navbar">
   <div class="nav-content">
-
-    <a routerLink="/" class="brand-logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="32" viewBox="0 0 160 160" fill="none"
-        class="nav-svg-logo">
+    <a routerLink="/home" class="brand-logo">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="auto"
+        height="32"
+        viewBox="0 0 160 160"
+        fill="none"
+        class="nav-svg-logo"
+      >
         <g>
-          <path d="M100 20C60 20 30 60 30 100V180H170V100C170 60 140 20 100 20Z" stroke="#d4af37" stroke-width="12"
-            stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M100 20C60 20 30 60 30 100V180H170V100C170 60 140 20 100 20Z"
+            stroke="#d4af37"
+            stroke-width="12"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
           <path d="M20 180H180" stroke="#d4af37" stroke-width="12" stroke-linecap="round" />
 
           <mask id="moon-mask-nav">
@@ -22,41 +32,42 @@
     </a>
 
     <nav class="nav-links">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
       <a routerLink="/prayer-time" routerLinkActive="active">Prayer Time</a>
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
     </nav>
 
     <div class="auth-actions">
-
       @if (!isConnected()) {
-      <a routerLink="/login" class="link-login">Log in</a>
-      <a routerLink="/auth" class="btn-register">S'inscrire</a>
+        <a routerLink="/login" class="link-login">Log in</a>
+        <a routerLink="/auth" class="btn-register">S'inscrire</a>
       } @else {
-      <div class="profile-container">
-        <button class="avatar-btn" (click)="toggleMenu()" [class.active]="isMenuOpen()">
-          <span>MS</span>
-        </button>
-
-        @if (isMenuOpen()) {
-        <div class="dropdown-menu">
-          <div class="menu-header">
-            <p class="user-name">Mon Compte</p>
-            <p class="user-email">user@example.com</p>
-          </div>
-          <div class="menu-divider"></div>
-          <a routerLink="/profile" class="menu-item">Paramètres</a>
-          <div class="menu-divider"></div>
+        <div class="profile-container">
           <button (click)="logout()" class="menu-item text-danger">Déconnexion</button>
+          <!-- <button class="avatar-btn" (click)="toggleMenu()" [class.active]="isMenuOpen()">
+            <span>MS</span>
+          </button>
+
+          @if (isMenuOpen()) {
+            <div class="dropdown-menu" role="menu" aria-label="Menu profil">
+              <div class="menu-header">
+                <p class="user-name">Mon Compte</p>
+                <p class="user-email">user@example.com</p>
+              </div>
+              <div class="menu-divider"></div>
+              <a routerLink="/profile" class="menu-item">Paramètres</a>
+              <div class="menu-divider"></div>
+              <button (click)="logout()" class="menu-item text-danger">Déconnexion</button>
+            </div>
+          }
+
+          @if (isMenuOpen()) {
+            <div class="overlay-click" (click)="closeMenu()"></div>
+          } -->
         </div>
-        }
-
-        @if (isMenuOpen()) {
-        <div class="overlay-click" (click)="closeMenu()"></div>
-        }
-      </div>
       }
-
     </div>
   </div>
 </header>
@@ -66,7 +77,6 @@
     <h1>Bienvenue sur Muslim Salat</h1>
     <p>Votre compagnon quotidien pour la prière et la spiritualité.</p>
   </div>
-
 
   <router-outlet></router-outlet>
 </main>

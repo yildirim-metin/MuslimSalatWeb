@@ -25,7 +25,7 @@ export class App {
    * Ouvre ou ferme le menu déroulant du profil
    */
   toggleMenu(): void {
-    this.isMenuOpen.update(val => !val);
+    this.isMenuOpen.update((val) => !val);
   }
 
   /**
@@ -38,6 +38,6 @@ export class App {
   logout(): void {
     this.closeMenu(); // On ferme le menu visuellement
     this.authService.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 }

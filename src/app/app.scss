@@ -8,12 +8,12 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-  height: 70px; /* Un tout petit peu plus haut pour le côté majestueux */
-  
+  height: 70px;
+
   /* Fond : Bleu Nuit profond et transparent */
-  background-color: rgba(5, 9, 20, 0.75); 
+  background-color: rgba(5, 9, 20, 0.75);
   backdrop-filter: blur(20px) saturate(180%);
-  
+
   /* Bordure : Un fil d'or très subtil en bas */
   border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }
@@ -33,36 +33,28 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  /* gap: 10px;  SUPPRIMÉ : On utilise une marge sur le SVG pour un contrôle plus fin */
   margin-right: 30px;
 }
 
-/* .emoji { font-size: 24px; } SUPPRIMÉ car remplacé par le SVG */
-
-/* --- NOUVEAU CSS POUR LE LOGO SVG --- */
+/* Logo SVG */
 .nav-svg-logo {
-  height: 32px; /* Taille fixe pour la navbar */
-  width: auto;  /* Largeur automatique proportionnelle */
-  margin-right: 12px; /* Espace entre le logo et le texte */
-  /* Effet de brillance dorée subtile */
+  height: 32px;
+  width: auto;
+  margin-right: 12px;
   filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 /* Animation au survol du logo complet */
 .brand-logo:hover .nav-svg-logo {
-    transform: scale(1.08); /* Léger zoom */
-    /* La brillance s'intensifie au survol */
-    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7));
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7));
 }
-/* ----------------------------------- */
 
 .brand-text {
   font-weight: 700;
   font-size: 19px;
   letter-spacing: -0.5px;
-  
-  /* Effet Premium : Dégradé Blanc vers Doré sur le texte */
   background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -78,23 +70,24 @@
 .nav-links a {
   text-decoration: none;
   font-size: 14px;
-  color: #94a3b8; /* Gris bleuté (Muted) pour les liens inactifs */
+  color: #94a3b8;
+  /* Gris bleuté */
   font-weight: 500;
   transition: all 0.2s ease;
   position: relative;
 }
 
 .nav-links a:hover {
-  color: #ffffff; /* Devient blanc au survol */
+  color: #ffffff;
 }
 
 /* Lien Actif : Doré */
 .nav-links a.active {
-  color: #d4af37; /* Or */
+  color: #d4af37;
   font-weight: 600;
 }
 
-/* Petite lueur sous le lien actif (Optionnel, très classe) */
+/* Petite lueur sous le lien actif */
 .nav-links a.active::after {
   content: '';
   position: absolute;
@@ -114,7 +107,7 @@
   gap: 15px;
 }
 
-/* Bouton Login (Visiteur) */
+/* Bouton Login */
 .link-login {
   text-decoration: none;
   font-size: 14px;
@@ -122,91 +115,104 @@
   font-weight: 500;
   transition: opacity 0.2s;
 }
-.link-login:hover { opacity: 0.8; }
 
-/* Bouton Register (Visiteur) */
+.link-login:hover {
+  opacity: 0.8;
+}
+
+/* Bouton Register */
 .btn-register {
   text-decoration: none;
   font-size: 13px;
-  
-  /* Bouton Doré */
   background: linear-gradient(135deg, #d4af37 0%, #b48608 100%);
-  color: #050914; /* Texte foncé sur fond or pour le contraste */
-  
+  color: #050914;
   padding: 8px 18px;
   border-radius: 99px;
   font-weight: 600;
   transition: transform 0.1s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); /* Ombre dorée */
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
 .btn-register:hover {
   box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
 }
 
-.btn-register:active { transform: scale(0.96); }
+.btn-register:active {
+  transform: scale(0.96);
+}
 
 /* --- Profil Avatar & Dropdown --- */
 .profile-container {
   position: relative;
+  /* Indispensable pour positionner le menu */
 }
 
 .avatar-btn {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  
-  /* Fond avatar sombre mais légèrement plus clair que la navbar */
-  background-color: #1e293b; 
+  background-color: #1e293b;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  color: #d4af37; /* Initiales en or */
+  color: #d4af37;
   transition: all 0.2s;
 }
 
 .avatar-btn:hover {
   background-color: #334155;
-  border-color: #d4af37; /* Bordure or au survol */
-}
-
-.avatar-btn.active {
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.5); /* Anneau or focus */
   border-color: #d4af37;
 }
 
-/* --- Menu Déroulant (Popover Dark) --- */
+.avatar-btn.active {
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.5);
+  border-color: #d4af37;
+}
+
+/* --- Menu Déroulant (CORRECTION Z-INDEX) --- */
 .dropdown-menu {
   position: absolute;
-  top: 50px;
+  top: 55px;
+  /* Légèrement décalé vers le bas */
   right: 0;
   width: 240px;
-  
-  /* Fond sombre opaque */
-  background-color: #0f172a; 
-  
+
+  background-color: #0f172a;
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure fine grise */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 8px;
-  z-index: 1001;
+
+  /* CORRECTION ICI : Très haut pour passer devant le dashboard */
+  z-index: 9999 !important;
+
   animation: popIn 0.2s ease-out;
 }
 
 .menu-header {
   padding: 12px 16px;
 }
-.user-name { margin: 0; font-weight: 600; font-size: 15px; color: #fff; }
-.user-email { margin: 0; font-size: 12px; color: #94a3b8; }
+
+.user-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+}
+
+.user-email {
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
 
 .menu-divider {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.1); /* Ligne de séparation subtile */
+  background-color: rgba(255, 255, 255, 0.1);
   margin: 6px 0;
 }
 
@@ -216,7 +222,7 @@
   text-align: left;
   padding: 10px 16px;
   font-size: 14px;
-  color: #e2e8f0; /* Texte clair */
+  color: #e2e8f0;
   text-decoration: none;
   background: none;
   border: none;
@@ -226,22 +232,30 @@
 }
 
 .menu-item:hover {
-  background-color: rgba(212, 175, 55, 0.1); /* Fond légèrement doré au survol */
-  color: #d4af37; /* Texte devient or */
+  background-color: rgba(212, 175, 55, 0.1);
+  color: #d4af37;
 }
 
-.text-danger { color: #ff5b5b; }
+.text-danger {
+  color: #ff5b5b;
+}
+
 .text-danger:hover {
   background-color: rgba(255, 91, 91, 0.1);
   color: #ff5b5b;
 }
 
-/* Overlay pour fermer au clic extérieur */
+/* Overlay pour fermer au clic extérieur (CORRECTION Z-INDEX) */
 .overlay-click {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   cursor: default;
+
+  /* CORRECTION ICI : Juste en dessous du menu (9999) */
+  z-index: 9998 !important;
 }
 
 /* Contenu Principal */
@@ -250,15 +264,29 @@
   margin: 40px auto;
   padding: 0 20px;
 }
+
 .hero-section {
   text-align: center;
   margin-bottom: 60px;
 }
-.hero-section h1 { color: #ffffff; }
-.hero-section p { color: #94a3b8; }
 
-/* Animation d'entrée du menu */
+.hero-section h1 {
+  color: #ffffff;
+}
+
+.hero-section p {
+  color: #94a3b8;
+}
+
+/* Animation */
 @keyframes popIn {
-  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
