@@ -3,12 +3,7 @@
     <div class="widget-header">
       <div class="location-selector">
         <span class="loc-icon">📍</span>
-        <input
-          type="text"
-          value="Paris, France"
-          class="loc-input"
-          placeholder="Chercher une ville..."
-        />
+        <input type="text" value="Liége, Belgique" class="loc-input" placeholder="Chercher une ville..." />
         <span class="edit-icon">✎</span>
       </div>
       <div class="date-display">{{ today }}</div>
@@ -25,18 +20,18 @@
 
         <div class="prayer-list">
           @for (prayer of prayersList; track prayer.label) {
-            <div class="prayer-row" [class.active-row]="nextPrayerName === prayer.label">
-              @if (nextPrayerName === prayer.label) {
-                <div class="row-content">
-                  <span class="p-name">{{ prayer.label }}</span>
-                  <span class="active-badge">Bientôt</span>
-                </div>
-              } @else {
-                <span class="p-name">{{ prayer.label }}</span>
-              }
-
-              <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
+          <div class="prayer-row" [class.active-row]="nextPrayerName === prayer.label">
+            @if (nextPrayerName === prayer.label) {
+            <div class="row-content">
+              <span class="p-name">{{ prayer.label }}</span>
+              <span class="active-badge">Bientôt</span>
             </div>
+            } @else {
+            <span class="p-name">{{ prayer.label }}</span>
+            }
+
+            <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
+          </div>
           }
         </div>
       </div>
@@ -44,10 +39,7 @@
       <div class="vertical-divider"></div>
 
       <div class="right-panel">
-        <app-calendar
-          [selectedDate]="currentDateTarget"
-          (dateChange)="onDateChangedFromCalendar($event)"
-        >
+        <app-calendar [selectedDate]="currentDateTarget" (dateChange)="onDateChangedFromCalendar($event)">
         </app-calendar>
       </div>
     </div>
