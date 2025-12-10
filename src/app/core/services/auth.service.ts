@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { UserRole } from '@core/enums/user-role.enum';
 import { LoginResponse } from '@core/models/login-response.model';
-import { Token } from '@core/models/token.model';
+import { CLAIM_ROLE_KEY, TokenPayload } from '@core/models/token.model';
 import { UserRegisterForm } from '@core/models/user-register-form.model';
 import { environment } from '@env';
 import { jwtDecode } from 'jwt-decode';
@@ -36,10 +36,30 @@ export class AuthService {
         localStorage.removeItem('token');
       } else {
         localStorage.setItem('token', token);
-        const tokenProp = jwtDecode<Token>(token);
-        this._role.set(tokenProp.role);
+        this.decodeJwtPayload(token);
       }
     });
+  }
+
+  private decodeJwtPayload(token: string) {
+    const payload = jwtDecode<TokenPayload>(token);
+
+    const rawRole = payload[CLAIM_ROLE_KEY];
+    if (!rawRole) {
+      this._role.set(null);
+      return;
+    }
+
+    const matchingRole = Object.values(UserRole).find(
+      (enumValue) => enumValue.toLowerCase() === rawRole.toLowerCase(),
+    );
+
+    if (matchingRole) {
+      this._role.set(matchingRole);
+    } else {
+      console.warn(`Role inconnu reçu: "${rawRole}". Accès Restreint.`);
+      this._role.set(null);
+    }
   }
 
   public async login(email: string, password: string): Promise<void> {

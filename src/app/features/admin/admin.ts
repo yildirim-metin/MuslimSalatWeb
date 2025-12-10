@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { MissionService } from '@core/services/mission.service';
 import { UserService } from '@core/services/user.service';
 import { Mission } from '@core/models/mission.model';
-import { User } from '@core/models/user.model';
 
 @Component({
   selector: 'app-admin',
@@ -31,8 +30,6 @@ export class Admin implements OnInit {
 
   ngOnInit(): void {
     this._missionService.GetAll();
-    console.log(this.users());
-    
     this._userService.GetAll();
   }
 
