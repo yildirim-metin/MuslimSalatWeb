@@ -23,7 +23,10 @@ export class PrayerTime implements OnDestroy {
   public currentDateTarget: Date = new Date();
 
   constructor() {
-    this._prayerTimeService.getPrayerTiming('Rue maubeuge 13, 4100 Seraing');
+    this._prayerTimeService.getPrayerTiming(
+      this.currentDateTarget,
+      'Rue maubeuge 13, 4100 Seraing',
+    );
 
     effect(() => {
       const timings = this.prayerTiming();
@@ -43,8 +46,10 @@ export class PrayerTime implements OnDestroy {
   public onDateChangedFromCalendar(newDate: Date): void {
     this.currentDateTarget = newDate;
 
-    // TODO: Recharger les prières pour la date spécifique !
-    // TODO: this._prayerTimeService.getPrayerTimingByDate(newDate); (à implémenter)
+    this._prayerTimeService.getPrayerTiming(
+      this.currentDateTarget,
+      'Rue maubeuge 13, 4100 Seraing',
+    );
   }
 
   private startCountdown(): void {
