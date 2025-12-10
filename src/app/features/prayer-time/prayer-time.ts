@@ -46,6 +46,10 @@ export class PrayerTime implements OnDestroy {
   public onDateChangedFromCalendar(newDate: Date): void {
     this.currentDateTarget = newDate;
 
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
     this._prayerTimeService.getPrayerTiming(
       this.currentDateTarget,
       'Rue maubeuge 13, 4100 Seraing',
@@ -55,6 +59,7 @@ export class PrayerTime implements OnDestroy {
   private startCountdown(): void {
     this.updateCountdown();
     this.intervalId = setInterval(() => {
+      console.log('hello world');
       this.updateCountdown();
     }, 1000);
   }
