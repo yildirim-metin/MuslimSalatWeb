@@ -5,16 +5,8 @@
   </header>
 
   <div class="tabs-nav">
-    <button
-      class="tab-btn"
-      [class.active]="currentTab() === 'challenges'"
-      (click)="setTab('challenges')"
-    >
+    <button class="tab-btn" [class.active]="currentTab() === 'challenges'" (click)="setTab('challenges')">
       <i class="fa-solid fa-hand-holding-heart"></i> Défis
-    </button>
-
-    <button class="tab-btn" [class.active]="currentTab() === 'verses'" (click)="setTab('verses')">
-      <i class="fa-solid fa-book-quran"></i> Versets
     </button>
 
     <button class="tab-btn" [class.active]="currentTab() === 'users'" (click)="setTab('users')">
@@ -23,178 +15,184 @@
   </div>
 
   @if (currentTab() === 'challenges') {
-    <div class="tab-content fade-in">
-      <div class="action-bar">
-        <h3>Gestion des Défis</h3>
-        <button class="btn-add" (click)="addItem('challenge')">+ Nouveau Défi</button>
-      </div>
-
-      <div class="glass-table-wrapper">
-        <table class="glass-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Titre du défi</th>
-              <th>Statut</th>
-              <th class="text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (challenge of challenges(); track challenge.id) {
-              <tr>
-                <td>#{{ challenge.id }}</td>
-                <td>{{ challenge.name }}</td>
-                <td>
-                  <span class="badge">
-                    {{ challenge.level }}
-                  </span>
-                </td>
-                <td class="text-end">
-                  <button class="btn-icon edit">
-                    <i class="fa-solid fa-pen" (click)="updateItem('challenge', challenge.id)"></i>
-                  </button>
-                  <button class="btn-icon delete" (click)="deleteItem('challenge', challenge.id)">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+  <div class="tab-content fade-in">
+    <div class="action-bar">
+      <h3>Gestion des Défis</h3>
+      <button class="btn-add" (click)="addItem('challenge')">+ Nouveau Défi</button>
     </div>
-  }
 
-  @if (currentTab() === 'verses') {
-    <div class="tab-content fade-in">
-      <div class="action-bar">
-        <h3>Versets du jour</h3>
-        <button class="btn-add" (click)="addItem('Verset')">+ Ajouter Verset</button>
-      </div>
-
-      <div class="glass-table-wrapper">
-        <table class="glass-table">
-          <thead>
-            <tr>
-              <th>Ref</th>
-              <th>Texte (Extrait)</th>
-              <th class="text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (verse of verses(); track verse.id) {
-              <tr>
-                <td>
-                  <span class="gold-text fw-bold">{{ verse.surah }}</span>
-                  <span class="text-muted text-sm">({{ verse.number }})</span>
-                </td>
-                <td class="text-truncate">{{ verse.text }}</td>
-                <td class="text-end">
-                  <button class="btn-icon edit"><i class="fa-solid fa-pen"></i></button>
-                  <button class="btn-icon delete" (click)="deleteItem('verse', verse.id)">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+    <div class="glass-table-wrapper">
+      <table class="glass-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre du défi</th>
+            <th>Statut</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (challenge of challenges(); track challenge.id) {
+          <tr>
+            <td>#{{ challenge.id }}</td>
+            <td>{{ challenge.name }}</td>
+            <td>
+              <span class="badge">
+                {{ challenge.level }}
+              </span>
+            </td>
+            <td class="text-end">
+              <button class="btn-icon edit" (click)="updateItem('challenge', challenge.id)">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <button class="btn-icon delete" (click)="deleteItem('challenge', challenge.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
     </div>
+  </div>
   }
 
   @if (currentTab() === 'users') {
-    <div class="tab-content fade-in">
-      <div class="action-bar">
-        <h3>Utilisateurs</h3>
-        <button class="btn-add" (click)="addItem('Utilisateur')">+ Créer Compte</button>
-      </div>
-
-      <div class="glass-table-wrapper">
-        <table class="glass-table">
-          <thead>
-            <tr>
-              <th>Utilisateur</th>
-              <th>Email</th>
-              <th>Rôle</th>
-              <th class="text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (user of users(); track user.id) {
-              <tr>
-                <td>
-                  <div class="user-cell">
-                    <div class="avatar-mini">{{ user.username.charAt(0) }}</div>
-                    <span>{{ user.username }}</span>
-                  </div>
-                </td>
-                <td>{{ user.email }}</td>
-                <td>
-                  <span class="role-badge" [class.admin]="user.role === 'admin'">
-                    {{ user.role }}
-                  </span>
-                </td>
-                <td class="text-end">
-                  <button class="btn-icon delete" (click)="deleteItem('user', user.id)">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+  <div class="tab-content fade-in">
+    <div class="action-bar">
+      <h3>Utilisateurs</h3>
+      <button class="btn-add" (click)="addItem('user')">+ Créer Compte</button>
     </div>
+
+    <div class="glass-table-wrapper">
+      <table class="glass-table">
+        <thead>
+          <tr>
+            <th>Utilisateur</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user.id) {
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="avatar-mini">{{ user.username.charAt(0).toUpperCase() }}</div>
+                <span>{{ user.username }}</span>
+              </div>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="role-badge" [class.admin]="user.role === 'admin'">
+                {{ user.role }}
+              </span>
+            </td>
+            <td class="text-end">
+              <button class="btn-icon edit" (click)="updateItem('user', user.id)">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <button class="btn-icon delete" (click)="deleteItem('user', user.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
   }
 
-  <!-- === MODALE AJOUT DÉFI === -->
   @if (isModalOpen()) {
-    <div class="modal-backdrop" (click)="closeModal()">
-      <!-- stopPropagation pour éviter que cliquer dans la modale ne la ferme -->
-      <div class="modal-glass" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h3>Nouveau Défi</h3>
-          <button class="btn-close" (click)="closeModal()">
-            <i class="fa-solid fa-times"></i>
-          </button>
+  <div class="modal-backdrop" (click)="closeModal()">
+    <div class="modal-glass" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h3>
+          @if (modalType() === 'challenge') { Nouveau Défi }
+          @else { Gestion Utilisateur }
+        </h3>
+        <button class="btn-close" (click)="closeModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+
+      @if (modalType() === 'challenge') {
+      <form (ngSubmit)="saveChallenge()">
+        <div class="form-group">
+          <label>Titre du défi</label>
+          <input type="text" [(ngModel)]="newMission.name" name="title" placeholder="Ex: Lire Sourate Al-Mulk" required
+            class="glass-input" />
         </div>
 
-        <form (ngSubmit)="saveChallenge()">
-          <div class="form-group">
-            <label>Titre du défi</label>
-            <input
-              type="text"
-              [(ngModel)]="newMission.name"
-              name="title"
-              placeholder="Ex: Lire Sourate Al-Mulk"
-              required
-              class="glass-input"
-            />
-          </div>
+        <div class="form-group">
+          <label>Difficulté</label>
+          <select [(ngModel)]="newMission.level" name="level" class="glass-input">
+            <option value="Facile">Facile</option>
+            <option value="Moyen">Moyen</option>
+            <option value="Difficile">Difficile</option>
+          </select>
+        </div>
 
-          <div class="form-group">
-            <label>Difficulté</label>
-            <select [(ngModel)]="newMission.level" name="level" class="glass-input">
-              <option value="Facile">Facile</option>
-              <option value="Moyen">Moyen</option>
-              <option value="Difficile">Difficile</option>
-            </select>
-          </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
 
-          <div class="modal-actions">
-            <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
+          <button type="submit" class="btn-save" [disabled]="isSubmitting()">
+            @if (isSubmitting()) {
+            <i class="fa-solid fa-spinner fa-spin"></i> ...
+            } @else {
+            Sauvegarder
+            }
+          </button>
+        </div>
+      </form>
+      }
 
-            <button type="submit" class="btn-save" [disabled]="isSubmitting()">
-              @if (isSubmitting()) {
-                <i class="fa-solid fa-spinner fa-spin"></i> Création...
-              } @else {
-                Sauvegarder
-              }
-            </button>
-          </div>
-        </form>
-      </div>
+      @if (modalType() === 'user') {
+      <form (ngSubmit)="saveUser()">
+        <div class="form-group">
+          <label>Nom d'utilisateur</label>
+          <input type="text" [(ngModel)]="newUser.username" name="username" placeholder="Ex: Amine" required
+            class="glass-input" />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="newUser.email" name="email" placeholder="Ex: mail@test.com" required
+            class="glass-input" />
+        </div>
+
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Min 8 caractères" required
+            minlength="8" class="glass-input" />
+        </div>
+
+        <div class="form-group">
+          <label>Rôle</label>
+          <select [(ngModel)]="newUser.role" name="role" class="glass-input">
+            <option value="user">Utilisateur</option>
+            <option value="admin">Administrateur</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
+
+          <button type="submit" class="btn-save" [disabled]="isSubmitting()">
+            @if (isSubmitting()) {
+            <i class="fa-solid fa-spinner fa-spin"></i> ...
+            } @else {
+            Sauvegarder
+            }
+          </button>
+        </div>
+      </form>
+      }
+
     </div>
+  </div>
   }
 </div>

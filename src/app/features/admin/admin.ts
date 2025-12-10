@@ -2,25 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MissionService } from '@core/services/mission.service';
+import { UserService } from '@core/services/user.service';
 import { Mission } from '@core/models/mission.model';
-
-interface Challenge {
-  id: number;
-  title: string;
-  active: boolean;
-}
-interface Verse {
-  id: number;
-  surah: string;
-  number: number;
-  text: string;
-}
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  role: 'admin' | 'user';
-}
+import { User } from '@core/models/user.model';
 
 @Component({
   selector: 'app-admin',
@@ -30,80 +14,61 @@ interface User {
   styleUrl: './admin.scss',
 })
 export class Admin implements OnInit {
-  // Créer un new service pour les USER et l'injecter ici
   private readonly _missionService = inject(MissionService);
+  private readonly _userService = inject(UserService);
 
-  currentTab = signal<'challenges' | 'verses' | 'users'>('challenges');
+  currentTab = signal<'challenges' | 'users'>('challenges');
+  modalType = signal<'challenge' | 'user'>('challenge');
 
-  // --- Gestion de la Modale ---
   isModalOpen = signal(false);
   isSubmitting = signal(false);
 
-  newMission: Partial<Mission> = {
-    name: '',
-    level: 'Facile',
-  };
+  newMission: Partial<Mission> = { name: '', level: 'Facile' };
+  newUser: any = { username: '', email: '', role: 'user', password: '' };
 
-  // challenges utilise le signal de missionService
   challenges = this._missionService.missions;
-
-  verses = signal<Verse[]>([
-    {
-      id: 1,
-      surah: 'Ash-Sharh',
-      number: 6,
-      text: 'A côté de la difficulté est, certes, une facilité.',
-    },
-    {
-      id: 2,
-      surah: 'Al-Baqarah',
-      number: 286,
-      text: "Allah n'impose à aucune âme une charge supérieure à sa capacité.",
-    },
-  ]);
-
-  // créer un service qui va contenir la liste de utilisation - VOIR missionService plus haut
-  // users devrait utiliser le signal de userService (comme pour challenges)
-  users = signal<User[]>([
-    { id: 1, username: 'Amine', email: 'amine@example.com', role: 'admin' },
-    { id: 2, username: 'Karim', email: 'karim@test.com', role: 'user' },
-    { id: 3, username: 'Sara', email: 'sara@test.com', role: 'user' },
-  ]);
+  users = this._userService.users;
 
   ngOnInit(): void {
     this._missionService.GetAll();
+    this._userService.GetAll();
   }
 
-  setTab(tab: 'challenges' | 'verses' | 'users') {
+  setTab(tab: 'challenges' | 'users') {
     this.currentTab.set(tab);
   }
 
-  // modifier la ligne de code dans le if(user)
   deleteItem(type: string, id: number) {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) return;
 
     if (type === 'challenge') {
       this._missionService.Remove(id);
-    } else if (type === 'verse') {
-      this.verses.update((list) => list.filter((v) => v.id !== id));
     } else if (type === 'user') {
-      this.users.update((list) => list.filter((u) => u.id !== id));
+      this._userService.Remove(id);
     }
   }
 
-  // ajouter un if(type === 'user')
   addItem(type: string) {
+    this.isModalOpen.set(true);
+
     if (type === 'challenge') {
+      this.modalType.set('challenge');
       this.newMission = { name: '', level: 'Facile' };
-      this.isModalOpen.set(true);
+    } else if (type === 'user') {
+      this.modalType.set('user');
+      this.newUser = { username: '', email: '', role: 'user', password: '' };
     }
   }
 
-  // ajouter un if(type === 'user')
   updateItem(type: string, id: number) {
+    this.isModalOpen.set(true);
+
     if (type === 'challenge') {
-      this.newMission = this.challenges().find((m) => m.id === id) ?? {};
-      this.isModalOpen.set(true);
+      this.modalType.set('challenge');
+      this.newMission = { ...this.challenges().find((m) => m.id === id) };
+    } else if (type === 'user') {
+      this.modalType.set('user');
+      this.newUser = { ...this.users().find((u) => u.id === id), password: '' };
     }
   }
 
@@ -111,7 +76,6 @@ export class Admin implements OnInit {
     this.isModalOpen.set(false);
   }
 
-  // Meme méthode pour saveUser
   async saveChallenge() {
     if (!this.newMission.name) return;
 
@@ -123,10 +87,28 @@ export class Admin implements OnInit {
       } else {
         await this._missionService.Add(this.newMission as Mission);
       }
-
       this.closeModal();
     } catch (error) {
       alert('Erreur lors de la création du défi.');
+    } finally {
+      this.isSubmitting.set(false);
+    }
+  }
+
+  async saveUser() {
+    if (!this.newUser.username || !this.newUser.email) return;
+
+    this.isSubmitting.set(true);
+
+    try {
+      if (this.newUser.id != null && this.newUser.id > 0) {
+        await this._userService.Update(this.newUser.id, this.newUser);
+      } else {
+        await this._userService.Add(this.newUser);
+      }
+      this.closeModal();
+    } catch (error) {
+      alert('Erreur lors de la sauvegarde utilisateur.');
     } finally {
       this.isSubmitting.set(false);
     }
