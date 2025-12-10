@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { UserRole } from '@core/enums/user-role.enum';
+import { ApiResponseError } from '@core/models/api-response-error.model';
 import { LoginResponse } from '@core/models/login-response.model';
 import { CLAIM_ROLE_KEY, TokenPayload } from '@core/models/token.model';
 import { UserRegisterForm } from '@core/models/user-register-form.model';
@@ -63,14 +64,22 @@ export class AuthService {
   }
 
   public async login(email: string, password: string): Promise<void> {
-    const response = await firstValueFrom(
-      this._httpClient.post<LoginResponse>(environment.apiUrl + 'auth/login', {
-        emailOrUsername: email,
-        password,
-      }),
-    );
+    try {
+      const response = await firstValueFrom(
+        this._httpClient.post<LoginResponse>(environment.apiUrl + 'auth/login', {
+          emailOrUsername: email,
+          password,
+        }),
+      );
+      console.log('response login :', response);
 
-    this._token.set(response.token);
+      this._token.set(response.token);
+    } catch (error) {
+      if (error instanceof HttpErrorResponse) {
+        let apiResponseError: ApiResponseError = error.error;
+        throw apiResponseError;
+      }
+    }
   }
 
   public register(form: UserRegisterForm): Promise<void> {

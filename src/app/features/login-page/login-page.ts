@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
+import { ApiResponseError } from '@core/models/api-response-error.model';
 
 @Component({
   selector: 'app-login-page',
@@ -49,11 +50,10 @@ export class LoginPage {
 
       setTimeout(() => {
         this.router.navigate(['/prayer-time']);
-      }, 2000);
+      }, 1000);
     } catch (error) {
-      this.errorMessage.set(
-        error instanceof Error ? error.message : 'Une erreur est survenue lors de la connexion',
-      );
+      const apiResponseError: ApiResponseError = error as ApiResponseError;
+      this.errorMessage.set(apiResponseError.content);
     } finally {
       this.isLoading.set(false);
     }

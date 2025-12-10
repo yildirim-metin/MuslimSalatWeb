@@ -19,11 +19,11 @@
   background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
   border-radius: 30px;
   padding: 40px 30px;
-  
+
   /* Bordure subtile et Ombre profonde */
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-  
+
   position: relative;
   overflow: hidden;
   color: white;
@@ -83,12 +83,12 @@ input {
   width: 100%;
   padding: 14px 16px;
   box-sizing: border-box; /* Important pour ne pas dépasser */
-  
+
   /* Fond très léger comme les lignes de prière */
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  
+
   color: #fff;
   font-size: 15px;
   transition: all 0.2s ease;
@@ -116,11 +116,11 @@ input.input-error {
   width: 100%;
   padding: 14px;
   margin-top: 10px;
-  
+
   /* Dégradé Or comme le badge "Bientôt" ou le texte highlight */
   background: linear-gradient(135deg, #d4af37 0%, #b48608 100%);
   color: #0f172a; /* Texte foncé pour le contraste */
-  
+
   border: none;
   border-radius: 14px; /* Même arrondi que les inputs */
   font-size: 16px;
@@ -166,4 +166,21 @@ input.input-error {
 .link-gold:hover {
   color: #fff;
   text-decoration: underline;
+}
+
+.alert {
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.alert-danger {
+  color: #fca5a5;
+  border-left: 3px solid #ef4444;
+}
+
+.alert-success {
+  color: #86efac;
+  border-left: 3px solid #22c55e;
 }
