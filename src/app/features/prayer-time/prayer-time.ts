@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
-import { PrayerTiming } from '@core/models/prayer-timing.model';
+import { Component, effect, inject, OnDestroy } from '@angular/core';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { CalendarComponent } from '@core/components/calendar/calendar';
 
