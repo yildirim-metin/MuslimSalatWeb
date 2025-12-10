@@ -1,74 +1,100 @@
-/* --- Styles Nouveaux : Calendrier --- */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.calendar-container {
+  padding: 5px;
+  width: 100%; 
+}
+
+/* --- En-tête (Mois + Nav) --- */
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  padding: 0 5px;
 }
 
 .current-month {
-  color: #fff;
   font-weight: 600;
-  font-size: 16px;
+  color: #fff;
+  font-size: 15px;
+  text-transform: capitalize;
 }
 
 .cal-nav {
   background: rgba(255, 255, 255, 0.05);
-  border: none;
-  color: #fff;
-  width: 28px;
-  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
 }
 
 .cal-nav:hover {
   background: rgba(212, 175, 55, 0.2);
   color: #d4af37;
+  border-color: #d4af37;
 }
 
+/* --- La Grille --- */
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  /* 7 colonnes égales */
-  gap: 8px;
+  grid-template-columns: repeat(7, 1fr); /* 7 jours */
+  gap: 8px; /* Espace entre les cases */
   text-align: center;
 }
 
+/* Noms des jours (Lun, Mar...) */
 .day-name {
-  color: #94a3b8;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
+/* Numéros des jours */
 .day-num {
-  height: 32px;
-  width: 32px;
+  aspect-ratio: 1 / 1; /* Carré parfait */
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color: #e2e8f0;
-  border-radius: 50%;
+  color: #fff;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s;
+  border: 1px solid transparent;
 }
 
-.day-num:hover:not(.day-active) {
-  background-color: rgba(255, 255, 255, 0.1);
+.day-num:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
+/* --- États des jours --- */
+
+/* Jour hors du mois (grisé) */
 .day-muted {
   color: #475569;
 }
 
-/* Jours hors mois */
+/* Aujourd'hui (Bordure dorée) */
+.day-today {
+  border-color: #d4af37;
+  color: #d4af37;
+  font-weight: bold;
+}
 
+/* Jour sélectionné (Fond plein doré) */
 .day-active {
-  background-color: #d4af37;
-  color: #0f172a;
-  font-weight: 700;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  background: #d4af37 !important;
+  color: #0f172a !important; /* Texte foncé pour contraste */
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }

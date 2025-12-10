@@ -4,6 +4,7 @@ import { PrayerTiming } from '@core/models/prayer-timing.model';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { CalendarComponent } from '@core/components/calendar/calendar';
 
+
 @Component({
   selector: 'app-prayer-time',
   imports: [CommonModule, CalendarComponent],

@@ -1,13 +1,6 @@
-import {
-  Component,
-  input,
-  output,
-  signal,
-  computed,
-  effect,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 
 export interface CalendarDay {
   date: Date;
@@ -21,79 +14,99 @@ export interface CalendarDay {
   selector: 'app-calendar',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './calendar.html',
-  styleUrl: './calendar.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './calendar.html', 
+  styleUrl: './calendar.scss'      
 })
-export class CalendarComponent {
-  public selectedDate = input.required<Date>();
+export class CalendarComponent implements OnInit {
+  
+  // Inputs / Outputs
+  @Input() set selectedDate(date: Date) {
+    this.currentDate.set(new Date(date));
+    this.generateCalendar();
+  }
+  @Output() dateChange = new EventEmitter<Date>();
 
-  public dateChange = output<Date>();
+  
+  currentViewDate = signal(new Date()); 
+  currentDate = signal(new Date());  
+  calendarDays = signal<CalendarDay[]>([]);
 
-  public viewDate = signal<Date>(new Date());
+  weekDays = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 
-  public calendarDays = signal<CalendarDay[]>([]);
-
-  public weekDays = ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'];
-
-  public monthYearDisplay = computed(() => {
-    return this.viewDate()
-      .toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
-      .replace(/^\w/, (c) => c.toUpperCase());
+  
+  monthYearDisplay = computed(() => {
+    return this.currentViewDate().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
   });
 
-  constructor() {
-    effect(() => {
-      const newDate = this.selectedDate();
-      this.viewDate.set(new Date(newDate));
-      this.generateCalendar();
-    });
-  }
-
-  public prevMonth(): void {
-    const current = this.viewDate();
-    this.viewDate.set(new Date(current.getFullYear(), current.getMonth() - 1, 1));
+  ngOnInit() {
     this.generateCalendar();
   }
 
-  public nextMonth(): void {
-    const current = this.viewDate();
-    this.viewDate.set(new Date(current.getFullYear(), current.getMonth() + 1, 1));
-    this.generateCalendar();
-  }
+  generateCalendar() {
+    const viewDate = this.currentViewDate();
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
 
-  public selectDay(day: CalendarDay): void {
-    this.dateChange.emit(day.date);
-  }
-
-  private generateCalendar(): void {
-    const year = this.viewDate().getFullYear();
-    const month = this.viewDate().getMonth();
-
+    
     const firstDayOfMonth = new Date(year, month, 1);
-    let startDayIndex = firstDayOfMonth.getDay() - 1;
-    if (startDayIndex === -1) startDayIndex = 6;
+    
+    const lastDayOfMonth = new Date(year, month + 1, 0);
 
+    
+    let startDayOfWeek = firstDayOfMonth.getDay(); 
+    if (startDayOfWeek === 0) startDayOfWeek = 7; 
+    
+   
     const startDate = new Date(firstDayOfMonth);
-    startDate.setDate(startDate.getDate() - startDayIndex);
+    startDate.setDate(startDate.getDate() - (startDayOfWeek - 1));
 
     const days: CalendarDay[] = [];
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
+   
     for (let i = 0; i < 42; i++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + i);
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
 
-      const isSelected = currentDate.toDateString() === this.selectedDate().toDateString();
-      const isSameMonth = currentDate.getMonth() === month;
-      const isToday = currentDate.toDateString() === new Date().toDateString();
+      
+      const isCurrentMonth = date.getMonth() === month;
+      const isToday = date.getTime() === today.getTime();
+      const isSelected = date.toDateString() === this.currentDate().toDateString();
 
       days.push({
-        date: currentDate,
-        dayNumber: currentDate.getDate(),
-        isCurrentMonth: isSameMonth,
-        isToday: isToday,
-        isSelected: isSelected,
+        date: date,
+        dayNumber: date.getDate(),
+        isCurrentMonth,
+        isToday,
+        isSelected
       });
     }
+
+    this.calendarDays.set(days);
+  }
+
+  prevMonth() {
+    const newDate = new Date(this.currentViewDate());
+    newDate.setMonth(newDate.getMonth() - 1);
+    this.currentViewDate.set(newDate);
+    this.generateCalendar();
+  }
+
+  nextMonth() {
+    const newDate = new Date(this.currentViewDate());
+    newDate.setMonth(newDate.getMonth() + 1);
+    this.currentViewDate.set(newDate);
+    this.generateCalendar();
+  }
+
+  selectDay(day: CalendarDay) {
+    this.currentDate.set(day.date);
+   
+    if (!day.isCurrentMonth) {
+      this.currentViewDate.set(new Date(day.date));
+    }
+    this.generateCalendar();
+    this.dateChange.emit(day.date);
   }
 }
