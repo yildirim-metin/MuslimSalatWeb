@@ -71,7 +71,6 @@ export class AuthService {
           password,
         }),
       );
-      console.log('response login :', response);
 
       this._token.set(response.token);
     } catch (error) {

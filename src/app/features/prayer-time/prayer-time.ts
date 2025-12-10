@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { PrayerTiming } from '@core/models/prayer-timing.model';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { CalendarComponent } from '@core/components/calendar/calendar';
-
 
 @Component({
   selector: 'app-prayer-time',
@@ -11,10 +10,10 @@ import { CalendarComponent } from '@core/components/calendar/calendar';
   templateUrl: './prayer-time.html',
   styleUrl: './prayer-time.scss',
 })
-export class PrayerTime implements OnInit, OnDestroy {
+export class PrayerTime implements OnDestroy {
   private readonly _prayerTimeService = inject(PrayerTimeService);
 
-  public prayerTiming?: PrayerTiming | null;
+  public prayerTiming = this._prayerTimeService.prayerTiming;
   public today = this.formatDate();
 
   public nextPrayerName: string = '--';
@@ -24,14 +23,16 @@ export class PrayerTime implements OnInit, OnDestroy {
 
   public currentDateTarget: Date = new Date();
 
-  ngOnInit(): void {
+  constructor() {
     this._prayerTimeService.getPrayerTiming('Rue maubeuge 13, 4100 Seraing');
 
-    this.prayerTiming = this._prayerTimeService.prayerTiming();
+    effect(() => {
+      const timings = this.prayerTiming();
 
-    if (this.prayerTiming) {
-      this.startCountdown();
-    }
+      if (timings) {
+        this.startCountdown();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -59,18 +60,18 @@ export class PrayerTime implements OnInit, OnDestroy {
 
     const now = new Date();
     const times = [
-      { name: 'Fajr', time: this.prayerTiming.fajr },
-      { name: 'Dhuhr', time: this.prayerTiming.dhuhr },
-      { name: 'Asr', time: this.prayerTiming.asr },
-      { name: 'Maghrib', time: this.prayerTiming.maghrib },
-      { name: 'Isha', time: this.prayerTiming.isha },
+      { name: 'Fajr', time: this.prayerTiming()?.fajr },
+      { name: 'Dhuhr', time: this.prayerTiming()?.dhuhr },
+      { name: 'Asr', time: this.prayerTiming()?.asr },
+      { name: 'Maghrib', time: this.prayerTiming()?.maghrib },
+      { name: 'Isha', time: this.prayerTiming()?.isha },
     ];
 
     let nextPrayerObj = null;
     let targetDate = new Date();
 
     for (const p of times) {
-      const pDate = this.createDateFromTime(p.time);
+      const pDate = this.createDateFromTime(p.time ?? '');
       if (pDate > now) {
         nextPrayerObj = p;
         targetDate = pDate;
@@ -80,7 +81,7 @@ export class PrayerTime implements OnInit, OnDestroy {
 
     if (!nextPrayerObj) {
       nextPrayerObj = times[0];
-      targetDate = this.createDateFromTime(times[0].time);
+      targetDate = this.createDateFromTime(times[0].time ?? '');
       targetDate.setDate(targetDate.getDate() + 1);
     }
 
@@ -121,11 +122,11 @@ export class PrayerTime implements OnInit, OnDestroy {
   public get prayersList() {
     if (!this.prayerTiming) return [];
     return [
-      { label: 'Fajr', time: this.prayerTiming.fajr },
-      { label: 'Dhuhr', time: this.prayerTiming.dhuhr },
-      { label: 'Asr', time: this.prayerTiming.asr },
-      { label: 'Maghrib', time: this.prayerTiming.maghrib },
-      { label: 'Isha', time: this.prayerTiming.isha },
+      { label: 'Fajr', time: this.prayerTiming()?.fajr },
+      { label: 'Dhuhr', time: this.prayerTiming()?.dhuhr },
+      { label: 'Asr', time: this.prayerTiming()?.asr },
+      { label: 'Maghrib', time: this.prayerTiming()?.maghrib },
+      { label: 'Isha', time: this.prayerTiming()?.isha },
     ];
   }
 }
