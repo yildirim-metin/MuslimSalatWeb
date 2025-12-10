@@ -19,6 +19,9 @@ export class UserService {
         this._httpClient.get<User[]>(`${environment.apiUrl}user`),
       );
 
+      console.log(result);
+      
+
       this._users.set(result);
     } catch (error) {
       console.error(error);

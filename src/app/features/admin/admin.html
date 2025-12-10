@@ -85,7 +85,7 @@
             </td>
             <td>{{ user.email }}</td>
             <td>
-              <span class="role-badge" [class.admin]="user.role === 'admin'">
+              <span class="role-badge" [class.admin]="user.role === 'Admin'">
                 {{ user.role }}
               </span>
             </td>
@@ -173,8 +173,8 @@
         <div class="form-group">
           <label>Rôle</label>
           <select [(ngModel)]="newUser.role" name="role" class="glass-input">
-            <option value="user">Utilisateur</option>
-            <option value="admin">Administrateur</option>
+            <option value="User">Utilisateur</option>
+            <option value="Admin">Administrateur</option>
           </select>
         </div>
 

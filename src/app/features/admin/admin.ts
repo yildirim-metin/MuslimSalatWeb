@@ -31,6 +31,8 @@ export class Admin implements OnInit {
 
   ngOnInit(): void {
     this._missionService.GetAll();
+    console.log(this.users());
+    
     this._userService.GetAll();
   }
 
@@ -56,7 +58,7 @@ export class Admin implements OnInit {
       this.newMission = { name: '', level: 'Facile' };
     } else if (type === 'user') {
       this.modalType.set('user');
-      this.newUser = { username: '', email: '', role: 'user', password: '' };
+      this.newUser = { username: '', email: '', role: 'User', password: '' };
     }
   }
 
