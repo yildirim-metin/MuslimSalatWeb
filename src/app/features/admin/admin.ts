@@ -4,17 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { MissionService } from '@core/services/mission.service';
 import { UserService } from '@core/services/user.service';
 import { Mission } from '@core/models/mission.model';
+import { Spinner } from '@core/components/spinner/spinner';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Spinner],
   templateUrl: './admin.html',
   styleUrl: './admin.scss',
 })
 export class Admin implements OnInit {
   private readonly _missionService = inject(MissionService);
   private readonly _userService = inject(UserService);
+
+  _missionIsLoading = this._missionService.isLoading;
+  _userIsLoading = this._userService.isLoading;
 
   currentTab = signal<'challenges' | 'users'>('challenges');
   modalType = signal<'challenge' | 'user'>('challenge');

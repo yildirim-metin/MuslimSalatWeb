@@ -16,29 +16,33 @@
 
     <div class="widget-content">
       <div class="left-panel">
-        <div class="next-prayer-highlight">
-          <p>
-            Prochaine prière : <span class="gold-text">{{ nextPrayerName }}</span>
-          </p>
-          <div class="countdown">{{ countDownDisplay }}</div>
-        </div>
+        @if (isLoading()) {
+          <app-spinner />
+        } @else {
+          <div class="next-prayer-highlight">
+            <p>
+              Prochaine prière : <span class="gold-text">{{ nextPrayerName }}</span>
+            </p>
+            <div class="countdown">{{ countDownDisplay }}</div>
+          </div>
 
-        <div class="prayer-list">
-          @for (prayer of prayersList; track prayer.label) {
-            <div class="prayer-row" [class.active-row]="nextPrayerName === prayer.label">
-              @if (nextPrayerName === prayer.label) {
-                <div class="row-content">
+          <div class="prayer-list">
+            @for (prayer of prayersList; track prayer.label) {
+              <div class="prayer-row" [class.active-row]="nextPrayerName === prayer.label">
+                @if (nextPrayerName === prayer.label) {
+                  <div class="row-content">
+                    <span class="p-name">{{ prayer.label }}</span>
+                    <span class="active-badge">Bientôt</span>
+                  </div>
+                } @else {
                   <span class="p-name">{{ prayer.label }}</span>
-                  <span class="active-badge">Bientôt</span>
-                </div>
-              } @else {
-                <span class="p-name">{{ prayer.label }}</span>
-              }
+                }
 
-              <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
-            </div>
-          }
-        </div>
+                <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
+              </div>
+            }
+          </div>
+        }
       </div>
 
       <div class="vertical-divider"></div>

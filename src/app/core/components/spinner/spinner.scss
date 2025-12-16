@@ -1,0 +1,86 @@
+/* On suppose que les variables CSS sont héritées depuis le styles.scss global.
+   Si ce n'est pas le cas, assure-toi qu'elles sont accessibles ici. */
+
+:host {
+  display: block;
+}
+
+/* Conteneur Plein Écran / Plein Parent */
+.spinner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Fond sombre semi-transparent (Basé sur ta --bg-dark #0f172a) */
+  background: rgba(15, 23, 42, 0.7);
+
+  /* L'effet de flou "Glassmorphism" pour matcher tes modales */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Z-index pour passer au-dessus des tableaux et inputs glass */
+  z-index: 50;
+
+  /* Pour respecter les bords arrondis des cartes parentes */
+  border-radius: inherit;
+
+  /* Animation d'apparition douce */
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* L'anneau du Spinner */
+.spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+
+  /* Le rail du spinner : un blanc très subtil (effet verre) */
+  border: 4px solid rgba(255, 255, 255, 0.08);
+  /* --border-glass */
+
+  /* La partie active : Ta couleur OR (#d4af37) */
+  border-top-color: var(--gold, #d4af37);
+
+  /* Effet GLOW : Une ombre portée dorée pour le côté "Premium" */
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+
+  /* L'animation */
+  animation: spin 1s linear infinite;
+}
+
+/* Texte optionnel sous le spinner (si tu veux ajouter "Chargement..." plus tard) */
+.loading-text {
+  margin-top: 15px;
+  color: var(--gold, #d4af37);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

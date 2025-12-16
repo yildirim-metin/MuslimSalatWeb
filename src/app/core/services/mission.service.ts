@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Mission } from '@core/models/mission.model';
 import { environment } from '@env';
 import { lastValueFrom } from 'rxjs';
@@ -12,6 +12,8 @@ export class MissionService {
 
   private _missions = signal<Mission[]>([]);
   public missions = this._missions.asReadonly();
+
+  public isLoading = computed<boolean>(() => this._missions().length === 0);
 
   public async GetAll(): Promise<void> {
     try {

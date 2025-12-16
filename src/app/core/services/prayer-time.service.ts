@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { PrayerTiming } from '@core/models/prayer-timing.model';
 import { environment } from '@env';
-import { firstValueFrom } from 'rxjs';
+import { delay, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,8 @@ export class PrayerTimeService {
 
   private _prayerTimings = signal<PrayerTiming | null>(null);
   public prayerTiming = this._prayerTimings.asReadonly();
+
+  public isLoading = computed<boolean>(() => this._prayerTimings() == null);
 
   public async getPrayerTiming(date: Date, address: string): Promise<void> {
     const prayerTimings = await firstValueFrom(

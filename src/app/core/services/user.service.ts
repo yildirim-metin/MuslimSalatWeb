@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { User } from '@core/models/user.model';
 import { environment } from '@env';
 import { lastValueFrom } from 'rxjs';
@@ -12,6 +12,8 @@ export class UserService {
 
   private _users = signal<User[]>([]);
   public users = this._users.asReadonly();
+
+  public isLoading = computed<boolean>(() => this._users().length === 0);
 
   public async GetAll(): Promise<void> {
     try {

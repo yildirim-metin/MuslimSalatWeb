@@ -2,15 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, effect, inject, OnDestroy } from '@angular/core';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { CalendarComponent } from '@core/components/calendar/calendar';
+import { Spinner } from '@core/components/spinner/spinner';
 
 @Component({
   selector: 'app-prayer-time',
-  imports: [CommonModule, CalendarComponent],
+  imports: [CommonModule, CalendarComponent, Spinner],
   templateUrl: './prayer-time.html',
   styleUrl: './prayer-time.scss',
 })
 export class PrayerTime implements OnDestroy {
   private readonly _prayerTimeService = inject(PrayerTimeService);
+
+  public isLoading = this._prayerTimeService.isLoading;
 
   public prayerTiming = this._prayerTimeService.prayerTiming;
   public today = this.formatDate();
