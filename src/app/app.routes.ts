@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
+import { adminGuard } from '@core/guards/admin-guard';
 export const routes: Routes = [
   {
     path: 'prayer-time',
     loadComponent: () => import('./features/prayer-time/prayer-time').then((r) => r.PrayerTime),
+    canActivate: [authGuard],
   },
   {
     path: 'login',
@@ -27,6 +29,6 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./features/admin/admin').then((r) => r.Admin),
-    canActivate: [authGuard],
+    canActivate: [adminGuard],
   },
 ];

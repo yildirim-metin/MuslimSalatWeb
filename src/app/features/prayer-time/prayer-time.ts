@@ -59,7 +59,6 @@ export class PrayerTime implements OnDestroy {
   private startCountdown(): void {
     this.updateCountdown();
     this.intervalId = setInterval(() => {
-      console.log('hello world');
       this.updateCountdown();
     }, 1000);
   }
