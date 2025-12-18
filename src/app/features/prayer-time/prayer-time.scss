@@ -1,7 +1,6 @@
 /* --- Conteneur Global --- */
 .preview-section {
   width: 100%;
-  /* On augmente la largeur max pour accueillir les deux colonnes */
   max-width: 850px;
   margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -26,7 +25,7 @@
   background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
 }
 
-/* --- Header & Location Input --- */
+/* --- Header & Location Selector --- */
 .widget-header {
   display: flex;
   justify-content: space-between;
@@ -36,7 +35,6 @@
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* Style du champ de recherche de ville */
 .location-selector {
   display: flex;
   align-items: center;
@@ -46,30 +44,42 @@
   border-radius: 20px;
   border: 1px solid transparent;
   transition: all 0.2s;
+  cursor: pointer; /* Indique que c'est cliquable */
 }
 
-.location-selector:hover, .location-selector:focus-within {
+.location-selector:hover {
   background: rgba(255,255,255,0.1);
   border-color: rgba(212, 175, 55, 0.3);
 }
 
 .loc-icon { font-size: 16px; }
 
+/* CORRECTION POUR LE SELECT */
 .loc-input {
   background: transparent;
   border: none;
   color: #fff;
   font-weight: 600;
   font-size: 15px;
-  width: 140px;
   outline: none;
+  cursor: pointer;
+  appearance: none; /* Enlève la flèche par défaut de Windows/macOS */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 10px;
 }
-.loc-input::placeholder { color: #94a3b8; }
+
+/* Style des options (le menu qui s'ouvre) */
+.loc-input option {
+  background-color: #1e293b; /* Couleur de fond du menu */
+  color: white;
+  padding: 10px;
+}
 
 .edit-icon {
-  font-size: 12px;
-  color: #94a3b8;
-  cursor: pointer;
+  font-size: 10px; /* Un peu plus petit pour ressembler à une flèche vers le bas */
+  color: #d4af37;
+  opacity: 0.8;
 }
 
 .date-display {
@@ -85,69 +95,77 @@
   align-items: flex-start;
 }
 
-/* Panneau Gauche : Prières */
-.left-panel {
-  flex: 1; /* Prend 50% de l'espace ou s'adapte */
-  min-width: 280px;
-}
-
-/* Panneau Droite : Calendrier */
-.right-panel {
+.left-panel, .right-panel {
   flex: 1;
-  min-width: 280px;
+  min-width: 0; /* Évite que le contenu ne déborde du flex */
 }
 
-/* Séparateur Vertical */
 .vertical-divider {
   width: 1px;
   background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
-  align-self: stretch; /* Prend toute la hauteur */
+  align-self: stretch;
 }
 
-/* --- Styles Existant Prières (Conservés) --- */
-.next-prayer-highlight { text-align: center; margin-bottom: 20px; }
+/* --- Countdown & Highlights --- */
+.next-prayer-highlight { text-align: center; margin-bottom: 25px; }
 .next-prayer-highlight p { margin: 0 0 5px 0; color: #94a3b8; font-size: 14px; }
 .gold-text { color: #d4af37; font-weight: 700; }
+
 .countdown {
   font-size: 42px; font-weight: 700; color: #fff;
   font-feature-settings: "tnum"; letter-spacing: -1px;
   text-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
 }
 
+/* --- Liste des Prières --- */
 .prayer-list { display: flex; flex-direction: column; gap: 10px; }
 
 .prayer-row {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px;
+  padding: 12px 16px;
   background-color: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
+  border: 1px solid transparent;
+  transition: background 0.3s;
 }
+
 .p-name { color: #cbd5e1; font-weight: 500; font-size: 14px; }
 .p-time { color: #fff; font-weight: 600; font-size: 14px; }
 
+/* Style pour la prochaine prière (Bientôt) */
 .active-row {
-  background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.02));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 .active-row .p-name, .active-row .p-time { color: #d4af37; }
 
 .row-content { display: flex; align-items: center; }
+
 .active-badge {
-  font-size: 9px; background-color: #d4af37; color: #000;
-  padding: 2px 5px; border-radius: 4px; font-weight: 800; margin-left: 8px; text-transform: uppercase;
+  font-size: 9px; 
+  background-color: #d4af37; 
+  color: #000;
+  padding: 2px 6px; 
+  border-radius: 4px; 
+  font-weight: 800; 
+  margin-left: 10px; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* --- Responsive (Mobile) --- */
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .widget-content {
-    flex-direction: column; /* Empile les éléments sur mobile */
+    flex-direction: column;
+    gap: 20px;
   }
   .vertical-divider {
-      width: 100%; height: 1px;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-      margin: 20px 0;
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    margin: 10px 0;
   }
-  .left-panel, .right-panel { width: 100%; }
-  .location-selector { width: 100%; }
-  .loc-input { width: 100%; }
+  .preview-section { padding: 10px; }
+  .prayer-preview-card { padding: 20px; }
+  .countdown { font-size: 36px; }
 }

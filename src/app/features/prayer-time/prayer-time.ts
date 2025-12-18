@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnDestroy } from '@angular/core';
+import { Component, effect, inject, OnDestroy, signal } from '@angular/core';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { CalendarComponent } from '@core/components/calendar/calendar';
 import { Spinner } from '@core/components/spinner/spinner';
 
 @Component({
   selector: 'app-prayer-time',
+  standalone: true,
   imports: [CommonModule, CalendarComponent, Spinner],
   templateUrl: './prayer-time.html',
   styleUrl: './prayer-time.scss',
@@ -14,26 +15,36 @@ export class PrayerTime implements OnDestroy {
   private readonly _prayerTimeService = inject(PrayerTimeService);
 
   public isLoading = this._prayerTimeService.isLoading;
-
   public prayerTiming = this._prayerTimeService.prayerTiming;
   public today = this.formatDate();
 
   public nextPrayerName: string = '--';
   public countDownDisplay: string = '00:00:00';
+  public currentPrayerName: string = ''; 
 
   public intervalId: any;
-
   public currentDateTarget: Date = new Date();
 
+  public cities = [
+    { name: 'Bruxelles', zip: '1000' },
+    { name: 'Anvers', zip: '2000' },
+    { name: 'Gand', zip: '9000' },
+    { name: 'Charleroi', zip: '6000' },
+    { name: 'Liège', zip: '4000' },
+    { name: 'Bruges', zip: '8000' },
+    { name: 'Namur', zip: '5000' },
+    { name: 'Louvain', zip: '3000' },
+    { name: 'Mons', zip: '7000' },
+    { name: 'Hasselt', zip: '3500' }
+  ];
+
+  public selectedCity = signal(this.cities[4]); 
+
   constructor() {
-    this._prayerTimeService.getPrayerTiming(
-      this.currentDateTarget,
-      'Rue maubeuge 13, 4100 Seraing',
-    );
+    this.loadPrayerTimes();
 
     effect(() => {
       const timings = this.prayerTiming();
-
       if (timings) {
         this.startCountdown();
       }
@@ -41,65 +52,77 @@ export class PrayerTime implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    this.stopInterval();
   }
 
   public onDateChangedFromCalendar(newDate: Date): void {
     this.currentDateTarget = newDate;
+    this.loadPrayerTimes();
+  }
 
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+  public onDropdownChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const zip = selectElement.value;
+    const city = this.cities.find(c => c.zip === zip);
+    
+    if (city) {
+      this.selectedCity.set(city);
+      this.loadPrayerTimes();
     }
+  }
 
+  private loadPrayerTimes(): void {
+    const city = this.selectedCity();
+    this.stopInterval(); 
     this._prayerTimeService.getPrayerTiming(
       this.currentDateTarget,
-      'Rue maubeuge 13, 4100 Seraing',
+      `${city.zip} ${city.name}, Belgium`
     );
   }
 
   private startCountdown(): void {
+    this.stopInterval();
     this.updateCountdown();
     this.intervalId = setInterval(() => {
       this.updateCountdown();
     }, 1000);
   }
 
+  private stopInterval(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   private updateCountdown(): void {
-    if (!this.prayerTiming) return;
+    const timings = this.prayerTiming();
+    if (!timings) return;
 
     const now = new Date();
-    const times = [
-      { name: 'Fajr', time: this.prayerTiming()?.fajr },
-      { name: 'Dhuhr', time: this.prayerTiming()?.dhuhr },
-      { name: 'Asr', time: this.prayerTiming()?.asr },
-      { name: 'Maghrib', time: this.prayerTiming()?.maghrib },
-      { name: 'Isha', time: this.prayerTiming()?.isha },
-    ];
+    const list = this.prayersList;
+    let nextIdx = -1;
 
-    let nextPrayerObj = null;
-    let targetDate = new Date();
-
-    for (const p of times) {
-      const pDate = this.createDateFromTime(p.time ?? '');
+    for (let i = 0; i < list.length; i++) {
+      const pDate = this.createDateFromTime(list[i].time ?? '');
       if (pDate > now) {
-        nextPrayerObj = p;
-        targetDate = pDate;
+        nextIdx = i;
         break;
       }
     }
 
-    if (!nextPrayerObj) {
-      nextPrayerObj = times[0];
-      targetDate = this.createDateFromTime(times[0].time ?? '');
+    let targetDate: Date;
+
+    if (nextIdx === -1) {
+      this.nextPrayerName = 'Fajr';
+      targetDate = this.createDateFromTime(list[0].time ?? '');
       targetDate.setDate(targetDate.getDate() + 1);
+    } else {
+      this.nextPrayerName = list[nextIdx].label;
+      targetDate = this.createDateFromTime(list[nextIdx].time ?? '');
     }
 
-    this.nextPrayerName = nextPrayerObj.name;
-
-    const diffMs = targetDate.getTime() - now.getTime();
-    this.countDownDisplay = this.formatMsToTime(diffMs);
+    this.currentPrayerName = this.nextPrayerName;
+    this.countDownDisplay = this.formatMsToTime(targetDate.getTime() - now.getTime());
   }
 
   private createDateFromTime(timeStr: string): Date {
@@ -131,13 +154,14 @@ export class PrayerTime implements OnDestroy {
   }
 
   public get prayersList() {
-    if (!this.prayerTiming) return [];
+    const t = this.prayerTiming();
+    if (!t) return [];
     return [
-      { label: 'Fajr', time: this.prayerTiming()?.fajr },
-      { label: 'Dhuhr', time: this.prayerTiming()?.dhuhr },
-      { label: 'Asr', time: this.prayerTiming()?.asr },
-      { label: 'Maghrib', time: this.prayerTiming()?.maghrib },
-      { label: 'Isha', time: this.prayerTiming()?.isha },
+      { label: 'Fajr', time: t.fajr },
+      { label: 'Dhuhr', time: t.dhuhr },
+      { label: 'Asr', time: t.asr },
+      { label: 'Maghrib', time: t.maghrib },
+      { label: 'Isha', time: t.isha },
     ];
   }
 }

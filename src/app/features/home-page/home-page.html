@@ -1,13 +1,23 @@
 <div class="dashboard-container">
   <div class="dashboard-header">
     <div class="header-left">
-      <h2>Liège, Belgique</h2>
+      <h2>{{ selectedCity().name }}, Belgique</h2>
+
       <div class="search-bar-styled">
-        <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8"></i>
-        <input type="text" class="search-input" placeholder="Indiquez votre localité" />
-        <button class="btn-search">Recherche</button>
+        <i class="fa-solid fa-location-dot" style="color: #94a3b8"></i>
+
+        <select class="search-input" (change)="onDropdownChange($event)">
+          @for (city of cities; track city.zip) {
+          <option [value]="city.zip" [selected]="city.zip === selectedCity().zip">
+            {{ city.zip }} - {{ city.name }}
+          </option>
+          }
+        </select>
+
+        <button class="btn-search" (click)="loadPrayerTimes()">Actualiser</button>
       </div>
     </div>
+
     <div class="header-right">
       <div class="date-gregorian">{{ today }}</div>
       <div class="date-hijri">13 Jumada al-Alkhirah 1447</div>
@@ -20,19 +30,15 @@
   </div>
   } @else {
   <div class="cards-scroll-container">
-
     @for (prayer of prayersList; track prayer.label) {
-
     <div class="prayer-card" [class.active]="prayer.label === currentPrayerName">
 
       @if (prayer.label === currentPrayerName) {
       <div>
         <span class="badge-now">Bientôt</span>
         <div class="p-name">{{ prayer.label }}</div>
-        <i [class]="icons[prayer.label]" class="p-icon" style="float: right; margin-top: -25px; color: var(--gold)">
-        </i>
+        <i [class]="icons[prayer.label]" class="p-icon" style="float: right; margin-top: -25px; color: var(--gold)"></i>
       </div>
-
       <div>
         <div class="p-time">{{ prayer.time | slice: 0 : 5 }}</div>
         <div class="countdown-text">
@@ -49,10 +55,8 @@
       </div>
       <div class="p-time">{{ prayer.time | slice: 0 : 5 }}</div>
       }
-
     </div>
     }
-
   </div>
   }
 </div>

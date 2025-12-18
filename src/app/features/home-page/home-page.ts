@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnDestroy } from '@angular/core';
+import { Component, effect, inject, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { Spinner } from '@core/components/spinner/spinner';
@@ -24,6 +24,21 @@ export class HomePage implements OnDestroy {
   private intervalId: any;
   public currentDateTarget: Date = new Date();
 
+  public cities = [
+    { name: 'Bruxelles', zip: '1000' },
+    { name: 'Anvers', zip: '2000' },
+    { name: 'Gand', zip: '9000' },
+    { name: 'Charleroi', zip: '6000' },
+    { name: 'Liège', zip: '4000' },
+    { name: 'Bruges', zip: '8000' },
+    { name: 'Namur', zip: '5000' },
+    { name: 'Louvain', zip: '3000' },
+    { name: 'Mons', zip: '7000' },
+    { name: 'Hasselt', zip: '3500' }
+  ];
+
+  public selectedCity = signal(this.cities[4]); 
+
   public icons: { [key: string]: string } = {
     'Fajr': 'fa-solid fa-cloud-sun',
     'Dhuhr': 'fa-regular fa-sun',
@@ -33,10 +48,7 @@ export class HomePage implements OnDestroy {
   };
 
   constructor() {
-    this._prayerTimeService.getPrayerTiming(
-      this.currentDateTarget,
-      '4000 Liège, Belgium',
-    );
+    this.loadPrayerTimes();
 
     effect(() => {
       const timings = this.prayerTiming();
@@ -48,6 +60,28 @@ export class HomePage implements OnDestroy {
 
   ngOnDestroy(): void {
     this.stopInterval();
+  }
+
+ 
+  public onDropdownChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const zip = selectElement.value;
+    
+    
+    const city = this.cities.find(c => c.zip === zip);
+    
+    if (city) {
+      this.selectedCity.set(city);
+      this.loadPrayerTimes();
+    }
+  }
+
+  public loadPrayerTimes(): void {
+    const city = this.selectedCity();
+    this._prayerTimeService.getPrayerTiming(
+      this.currentDateTarget,
+      `${city.zip} ${city.name}, Belgium`
+    );
   }
 
   private startCountdown(): void {
@@ -91,6 +125,7 @@ export class HomePage implements OnDestroy {
       targetDate = this.createDateFromTime(list[nextIdx].time ?? '');
     }
 
+    
     this.currentPrayerName = this.nextPrayerName;
     this.countDownDisplay = this.formatMsToTime(targetDate.getTime() - now.getTime());
   }
