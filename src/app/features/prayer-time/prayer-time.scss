@@ -169,3 +169,47 @@
   .prayer-preview-card { padding: 20px; }
   .countdown { font-size: 36px; }
 }
+
+.btn-today {
+  /* Mise en forme de base */
+  display: flex;            /* Changé d'inline-flex à flex pour le centrage */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;       /* Un peu plus de padding pour le confort */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Centrage horizontal et espacement haut */
+  margin: 25px auto 0 auto; /* 25px d'espace au dessus, auto sur les côtés pour centrer */
+  width: fit-content;       /* Important pour que le "auto" fonctionne */
+  
+  /* Typographie */
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  
+  /* Style Glass Gold */
+  background: rgba(212, 175, 55, 0.08);
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 50px; 
+
+  i {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.18);
+    border-color: #d4af37;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(212, 175, 55, 0.2);
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    background: #d4af37;
+    color: #0f172a;
+  }
+}

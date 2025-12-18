@@ -19,7 +19,7 @@ export class PrayerTime implements OnDestroy {
   public today = this.formatDate();
 
   public nextPrayerName: string = '--';
-  public countDownDisplay: string = '00:00:00';
+  public countDownDisplay: string = ''; // Vide par défaut
   public currentPrayerName: string = ''; 
 
   public intervalId: any;
@@ -53,6 +53,13 @@ export class PrayerTime implements OnDestroy {
 
   ngOnDestroy(): void {
     this.stopInterval();
+  }
+
+  public isToday(date: Date): boolean {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+           date.getMonth() === today.getMonth() &&
+           date.getFullYear() === today.getFullYear();
   }
 
   public onDateChangedFromCalendar(newDate: Date): void {
@@ -98,6 +105,13 @@ export class PrayerTime implements OnDestroy {
     const timings = this.prayerTiming();
     if (!timings) return;
 
+    if (!this.isToday(this.currentDateTarget)) {
+      this.currentPrayerName = '';
+      this.nextPrayerName = '';
+      this.countDownDisplay = '';
+      return; 
+    }
+
     const now = new Date();
     const list = this.prayersList;
     let nextIdx = -1;
@@ -134,7 +148,6 @@ export class PrayerTime implements OnDestroy {
 
   private formatMsToTime(ms: number): string {
     if (ms < 0) return '00:00:00';
-
     const seconds = Math.floor((ms / 1000) % 60);
     const minutes = Math.floor((ms / (1000 * 60)) % 60);
     const hours = Math.floor(ms / (1000 * 60 * 60));
@@ -163,5 +176,9 @@ export class PrayerTime implements OnDestroy {
       { label: 'Maghrib', time: t.maghrib },
       { label: 'Isha', time: t.isha },
     ];
+  }
+
+  public returnToday() {
+    this.onDateChangedFromCalendar(new Date());
   }
 }

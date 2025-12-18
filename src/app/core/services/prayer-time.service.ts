@@ -13,14 +13,17 @@ export class PrayerTimeService {
   private _prayerTimings = signal<PrayerTiming | null>(null);
   public prayerTiming = this._prayerTimings.asReadonly();
 
-  public isLoading = computed<boolean>(() => this._prayerTimings() == null);
+  public isLoading = signal(false);
 
   public async getPrayerTiming(date: Date, address: string): Promise<void> {
+    this.isLoading.set(true);
     const prayerTimings = await firstValueFrom(
       this._httpClient.get<PrayerTiming>(
         `${environment.apiUrl}PrayerTime?Date=${date.toISOString()}&Address=${address}`,
       ),
     );
+
+    this.isLoading.set(false);
 
     this._prayerTimings.set(prayerTimings);
   }

@@ -20,12 +20,14 @@
         @if (isLoading()) {
         <app-spinner />
         } @else {
+        @if (isToday(currentDateTarget)) {
         <div class="next-prayer-highlight">
           <p>
             Prochaine prière : <span class="gold-text">{{ nextPrayerName }}</span>
           </p>
           <div class="countdown">{{ countDownDisplay }}</div>
         </div>
+        }
 
         <div class="prayer-list">
           @for (prayer of prayersList; track prayer.label) {
@@ -44,7 +46,13 @@
             <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
           </div>
           }
+
         </div>
+        @if (!isToday(currentDateTarget)) {
+        <button class="btn-today" (click)="returnToday()">
+          <i class="fa-solid fa-calendar-day"></i>
+          Aujourd'hui
+        </button>}
         }
       </div>
 
