@@ -1,5 +1,4 @@
 <div class="dashboard-container">
-  <!-- EN-TÊTE -->
   <div class="dashboard-header">
     <div class="header-left">
       <h2>Liège, Belgique</h2>
@@ -10,67 +9,50 @@
       </div>
     </div>
     <div class="header-right">
-      <div class="date-gregorian">Jeudi, 04 Décembre 2025</div>
+      <div class="date-gregorian">{{ today }}</div>
       <div class="date-hijri">13 Jumada al-Alkhirah 1447</div>
     </div>
   </div>
 
-  <!-- LES CARTES -->
+  @if (isLoading()) {
+  <div class="loader-container">
+    <app-spinner />
+  </div>
+  } @else {
   <div class="cards-scroll-container">
-    <!-- Carte Standard -->
-    <div class="prayer-card">
-      <div class="card-top">
-        <span class="p-name">Fajr</span>
-        <i class="fa-solid fa-cloud-sun p-icon"></i>
-      </div>
-      <div class="p-time">06:19</div>
-    </div>
 
-    <!-- Carte Standard -->
-    <div class="prayer-card">
-      <div class="card-top">
-        <span class="p-name">Dhuhr</span>
-        <i class="fa-regular fa-sun p-icon"></i>
-      </div>
-      <div class="p-time">12:28</div>
-    </div>
+    @for (prayer of prayersList; track prayer.label) {
 
-    <!-- Carte Standard -->
-    <div class="prayer-card">
-      <div class="card-top">
-        <span class="p-name">Asr</span>
-        <i class="fa-solid fa-cloud-sun p-icon"></i>
-      </div>
-      <div class="p-time">14:15</div>
-    </div>
+    <div class="prayer-card" [class.active]="prayer.label === currentPrayerName">
 
-    <!-- CARTE ACTIVE (Maghrib) -->
-    <div class="prayer-card active">
+      @if (prayer.label === currentPrayerName) {
       <div>
-        <span class="badge-now">Maintenant</span>
-        <div class="p-name">Maghrib</div>
-        <i
-          class="fa-solid fa-moon p-icon"
-          style="float: right; margin-top: -25px; color: var(--gold)"
-        ></i>
+        <span class="badge-now">Bientôt</span>
+        <div class="p-name">{{ prayer.label }}</div>
+        <i [class]="icons[prayer.label]" class="p-icon" style="float: right; margin-top: -25px; color: var(--gold)">
+        </i>
       </div>
 
       <div>
-        <div class="p-time">16:34</div>
+        <div class="p-time">{{ prayer.time | slice: 0 : 5 }}</div>
         <div class="countdown-text">
           <i class="fa-regular fa-hourglass"></i>
-          <span>Isha dans 1h 41m</span>
+          <span>{{ nextPrayerName }} dans {{ countDownDisplay }}</span>
         </div>
       </div>
-    </div>
+      }
 
-    <!-- Carte Standard -->
-    <div class="prayer-card">
+      @else {
       <div class="card-top">
-        <span class="p-name">Isha</span>
-        <i class="fa-solid fa-moon p-icon"></i>
+        <span class="p-name">{{ prayer.label }}</span>
+        <i [class]="icons[prayer.label]" class="p-icon"></i>
       </div>
-      <div class="p-time">18:32</div>
+      <div class="p-time">{{ prayer.time | slice: 0 : 5 }}</div>
+      }
+
     </div>
+    }
+
   </div>
+  }
 </div>
