@@ -31,4 +31,9 @@ export const routes: Routes = [
     loadComponent: () => import('./features/admin/admin').then((r) => r.Admin),
     canActivate: [adminGuard],
   },
+  {
+    path: 'event',
+    loadComponent: () => import('./features/event-page/event-page').then((r) => r.EventPage),
+    canActivate: [authGuard],
+  },
 ];

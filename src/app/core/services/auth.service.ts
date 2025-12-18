@@ -3,7 +3,7 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { UserRole } from '@core/enums/user-role.enum';
 import { ApiResponseError } from '@core/models/api-response-error.model';
 import { LoginResponse } from '@core/models/login-response.model';
-import { CLAIM_ROLE_KEY, TokenPayload } from '@core/models/token.model';
+import { CLAIM_ROLE_KEY, CLAIM_SID_KEY, TokenPayload } from '@core/models/token.model';
 import { UserRegisterForm } from '@core/models/user-register-form.model';
 import { environment } from '@env';
 import { jwtDecode } from 'jwt-decode';
@@ -22,6 +22,9 @@ export class AuthService {
 
   private _role = signal<UserRole | null>(null);
   public role = this._role.asReadonly();
+
+  private _idUser = signal<number>(0);
+  public idUser = this._idUser.asReadonly();
 
   constructor() {
     const tokenStr = localStorage.getItem('token');
@@ -44,6 +47,8 @@ export class AuthService {
 
   private decodeJwtPayload(token: string) {
     const payload = jwtDecode<TokenPayload>(token);
+
+    this._idUser.set(Number(payload[CLAIM_SID_KEY]));
 
     const rawRole = payload[CLAIM_ROLE_KEY];
     if (!rawRole) {
