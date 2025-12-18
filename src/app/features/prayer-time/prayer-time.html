@@ -5,12 +5,12 @@
         <span class="loc-icon">📍</span>
         <select class="loc-input" (change)="onDropdownChange($event)">
           @for (city of cities; track city.zip) {
-          <option [value]="city.zip" [selected]="city.zip === selectedCity().zip">
-            {{ city.name }}
-          </option>
+            <option [value]="city.zip" [selected]="city.zip === selectedCity()?.zip">
+              {{ city.name }}
+            </option>
           }
         </select>
-        <span class="edit-icon">✎</span>
+        <span class="edit-icon">🔍</span>
       </div>
       <div class="date-display">{{ today }}</div>
     </div>
@@ -18,48 +18,53 @@
     <div class="widget-content">
       <div class="left-panel">
         @if (isLoading()) {
-        <app-spinner />
+          <app-spinner />
         } @else {
-        @if (isToday(currentDateTarget)) {
-        <div class="next-prayer-highlight">
-          <p>
-            Prochaine prière : <span class="gold-text">{{ nextPrayerName }}</span>
-          </p>
-          <div class="countdown">{{ countDownDisplay }}</div>
-        </div>
-        }
-
-        <div class="prayer-list">
-          @for (prayer of prayersList; track prayer.label) {
-          <div class="prayer-row" [class.active-row]="nextPrayerName === prayer.label"
-            [class.active]="prayer.label === currentPrayerName">
-
-            @if (nextPrayerName === prayer.label) {
-            <div class="row-content">
-              <span class="p-name">{{ prayer.label }}</span>
-              <span class="active-badge">Bientôt</span>
+          @if (isToday(currentDateTarget)) {
+            <div class="next-prayer-highlight">
+              <p>
+                Prochaine prière : <span class="gold-text">{{ nextPrayerName }}</span>
+              </p>
+              <div class="countdown">{{ countDownDisplay }}</div>
             </div>
-            } @else {
-            <span class="p-name">{{ prayer.label }}</span>
-            }
-
-            <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
-          </div>
           }
 
-        </div>
-        @if (!isToday(currentDateTarget)) {
-        <button class="btn-today" (click)="returnToday()">
-          <i class="fa-solid fa-calendar-day"></i>
-          Aujourd'hui
-        </button>}
+          <div class="prayer-list">
+            @for (prayer of prayersList; track prayer.label) {
+              <div
+                class="prayer-row"
+                [class.active-row]="nextPrayerName === prayer.label"
+                [class.active]="prayer.label === currentPrayerName"
+              >
+                @if (nextPrayerName === prayer.label) {
+                  <div class="row-content">
+                    <span class="p-name">{{ prayer.label }}</span>
+                    <span class="active-badge">Bientôt</span>
+                  </div>
+                } @else {
+                  <span class="p-name">{{ prayer.label }}</span>
+                }
+
+                <span class="p-time">{{ prayer.time | slice: 0 : 5 }}</span>
+              </div>
+            }
+          </div>
+          @if (!isToday(currentDateTarget)) {
+            <button class="btn-today" (click)="returnToday()">
+              <i class="fa-solid fa-calendar-day"></i>
+              Aujourd'hui
+            </button>
+          }
         }
       </div>
 
       <div class="vertical-divider"></div>
 
       <div class="right-panel">
-        <app-calendar [selectedDate]="currentDateTarget" (dateChange)="onDateChangedFromCalendar($event)">
+        <app-calendar
+          [selectedDate]="currentDateTarget"
+          (dateChange)="onDateChangedFromCalendar($event)"
+        >
         </app-calendar>
       </div>
     </div>

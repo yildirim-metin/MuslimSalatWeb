@@ -3,6 +3,8 @@ import { Component, effect, inject, OnDestroy, signal } from '@angular/core';
 import { PrayerTimeService } from '@core/services/prayer-time.service';
 import { CalendarComponent } from '@core/components/calendar/calendar';
 import { Spinner } from '@core/components/spinner/spinner';
+import { jwtDecode } from 'jwt-decode';
+import { City } from '@core/models/city.model';
 
 @Component({
   selector: 'app-prayer-time',
@@ -19,13 +21,13 @@ export class PrayerTime implements OnDestroy {
   public today = this.formatDate();
 
   public nextPrayerName: string = '--';
-  public countDownDisplay: string = ''; // Vide par défaut
-  public currentPrayerName: string = ''; 
+  public countDownDisplay: string = '';
+  public currentPrayerName: string = '';
 
   public intervalId: any;
   public currentDateTarget: Date = new Date();
 
-  public cities = [
+  public cities = <City[]>[
     { name: 'Bruxelles', zip: '1000' },
     { name: 'Anvers', zip: '2000' },
     { name: 'Gand', zip: '9000' },
@@ -35,18 +37,39 @@ export class PrayerTime implements OnDestroy {
     { name: 'Namur', zip: '5000' },
     { name: 'Louvain', zip: '3000' },
     { name: 'Mons', zip: '7000' },
-    { name: 'Hasselt', zip: '3500' }
+    { name: 'Hasselt', zip: '3500' },
   ];
 
-  public selectedCity = signal(this.cities[4]); 
+  public selectedCity = signal<City | null>(null);
 
   constructor() {
     this.loadPrayerTimes();
+
+    const storedCity = localStorage.getItem('selected-city');
+    let cityToSet = this.cities[4];
+
+    if (storedCity) {
+      try {
+        cityToSet = JSON.parse(storedCity);
+      } catch (e) {
+        console.warn('Données locales corrompues, réinitialisation à la valeur par défaut.');
+        localStorage.removeItem('selected-city');
+      }
+    }
+
+    this.selectedCity.set(cityToSet);
 
     effect(() => {
       const timings = this.prayerTiming();
       if (timings) {
         this.startCountdown();
+      }
+    });
+
+    effect(() => {
+      const city = this.selectedCity();
+      if (city) {
+        localStorage.setItem('selected-city', JSON.stringify(city));
       }
     });
   }
@@ -57,9 +80,11 @@ export class PrayerTime implements OnDestroy {
 
   public isToday(date: Date): boolean {
     const today = new Date();
-    return date.getDate() === today.getDate() &&
-           date.getMonth() === today.getMonth() &&
-           date.getFullYear() === today.getFullYear();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
   }
 
   public onDateChangedFromCalendar(newDate: Date): void {
@@ -70,8 +95,8 @@ export class PrayerTime implements OnDestroy {
   public onDropdownChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const zip = selectElement.value;
-    const city = this.cities.find(c => c.zip === zip);
-    
+    const city = this.cities.find((c) => c.zip === zip);
+
     if (city) {
       this.selectedCity.set(city);
       this.loadPrayerTimes();
@@ -80,10 +105,10 @@ export class PrayerTime implements OnDestroy {
 
   private loadPrayerTimes(): void {
     const city = this.selectedCity();
-    this.stopInterval(); 
+    this.stopInterval();
     this._prayerTimeService.getPrayerTiming(
       this.currentDateTarget,
-      `${city.zip} ${city.name}, Belgium`
+      `${city?.zip} ${city?.name}, Belgium`,
     );
   }
 
@@ -109,7 +134,7 @@ export class PrayerTime implements OnDestroy {
       this.currentPrayerName = '';
       this.nextPrayerName = '';
       this.countDownDisplay = '';
-      return; 
+      return;
     }
 
     const now = new Date();
